@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "title": "Kesariya",
+    "artist": "Arijit Singh",
+    "url": "/songs/Kesariya.mp3",
+    "cover": "/covers/Kesariys.jpg",
+    "mood": "romantic"
+  },
+  {
+    "id": 2,
+    "title": "Shiddat",
+    "artist": "Arijit Singh",
+    "url": "/songs/Shiddat.mp3",
+    "cover": "/covers/Shiddat.jpg",
+    "mood": "intense"
+  },
+  {
+    "id": 3,
+    "title": "Roke Na Ruke Naina",
+    "artist": "Arijit Singh",
+    "url": "/songs/Roke Na Ruke Naina (Full Audio Song)   Arijit Singh   Varun, Alia    Badrinath Ki Dulhania.mp3",
+    "cover": "/covers/roke na ruke.jpg",
+    "mood": "sad"
+  },
+  {
+    "id": 4,
+    "title": "Saathiya",
+    "artist": "Arijit Singh",
+    "url": "/songs/Saathiya   Singham   Ajay Devgan, Kajal Aggarwal.mp3",
+    "cover": "/covers/Saathiya.jpg",
+    "mood": "romantic"
+  },
+  {
+    "id": 5,
+    "title": "Sau Tarah ke",
+    "artist": "Arijit Singh",
+    "url": "/songs/Sau Tarah Ke Full Video Song   Dishoom   John Abraham   Varun Dhawan   Jacqueline Fernandez  Pritam.mp3",
+    "cover": "/covers/sau tarah ke.jpg",
+    "mood": "party"
+  },
+  {
+    "id": 6,
+    "title": "Bairiyaa",
+    "artist": "Arijit Singh",
+    "url": "/songs/Bairiyaa   Ramaiya Vastavaiya   Girish Kumar & Shruti Haasan   Atif Aslam, Shreya Ghoshal.mp3",
+    "cover": "/covers/Bairiyaa.jpg",
+    "mood": "romantic"
+  },
+  {
+    "id": 7,
+    "title": "Balam Pichkari",
+    "artist": "Arijit Singh",
+    "url": "/songs/Balam-Pichkari-Ft-Rang-Barse-Mashup-(Club-Remix)_320(PaglaSongs).mp3",
+    "cover": "/covers/Balam Pichkari.jpg",
+    "mood": "romantic"
+  },
+   {
+    "id": 8,
+    "title": "Titli",
+    "artist": "Arijit Singh",
+    "url": "/songs/Titli Chennai Express Full Video Song   Shahrukh Khan, Deepika Padukone.mp3",
+    "cover": "/covers/titli.jpg",
+    "mood": "romantic"
+  }
+  
+]
