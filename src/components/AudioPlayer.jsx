@@ -23,7 +23,7 @@ const AudioPlayer = ({ currentSong }) => {
   };
 
   return (
-    <div className="fixed bottom-0 left-0 w-full bg-gray-800 text-white p-4 z-20 flex flex-col sm:flex-row items-center justify-between shadow-lg">
+    <div className="fixed bottom-0 left-0 w-full bg-gray-900 text-white p-4 z-20 flex flex-col sm:flex-row items-center justify-between shadow-lg">
       <audio
         ref={audioRef}
         src={currentSong?.url}

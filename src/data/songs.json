@@ -5,7 +5,8 @@
     "artist": "Arijit Singh",
     "url": "/songs/Kesariya.mp3",
     "cover": "/covers/Kesariys.jpg",
-    "mood": "romantic"
+    "mood": "romantic",
+    "duration": 185
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "artist": "Arijit Singh",
     "url": "/songs/Shiddat.mp3",
     "cover": "/covers/Shiddat.jpg",
-    "mood": "intense"
+    "mood": "intense",
+    "duration": 190
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "artist": "Arijit Singh",
     "url": "/songs/Roke Na Ruke Naina (Full Audio Song)   Arijit Singh   Varun, Alia    Badrinath Ki Dulhania.mp3",
     "cover": "/covers/roke na ruke.jpg",
-    "mood": "sad"
+    "mood": "sad",
+    "duration": 210
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "artist": "Arijit Singh",
     "url": "/songs/Saathiya   Singham   Ajay Devgan, Kajal Aggarwal.mp3",
     "cover": "/covers/Saathiya.jpg",
-    "mood": "romantic"
+    "mood": "romantic",
+    "duration": 200
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "artist": "Arijit Singh",
     "url": "/songs/Sau Tarah Ke Full Video Song   Dishoom   John Abraham   Varun Dhawan   Jacqueline Fernandez  Pritam.mp3",
     "cover": "/covers/sau tarah ke.jpg",
-    "mood": "party"
+    "mood": "party",
+    "duration": 175
   },
   {
     "id": 6,
@@ -45,7 +50,8 @@
     "artist": "Arijit Singh",
     "url": "/songs/Bairiyaa   Ramaiya Vastavaiya   Girish Kumar & Shruti Haasan   Atif Aslam, Shreya Ghoshal.mp3",
     "cover": "/covers/Bairiyaa.jpg",
-    "mood": "romantic"
+    "mood": "romantic",
+    "duration": 198
   },
   {
     "id": 7,
@@ -53,15 +59,44 @@
     "artist": "Arijit Singh",
     "url": "/songs/Balam-Pichkari-Ft-Rang-Barse-Mashup-(Club-Remix)_320(PaglaSongs).mp3",
     "cover": "/covers/Balam Pichkari.jpg",
-    "mood": "romantic"
+    "mood": "romantic",
+    "duration": 165
   },
-   {
+  {
     "id": 8,
     "title": "Titli",
     "artist": "Arijit Singh",
     "url": "/songs/Titli Chennai Express Full Video Song   Shahrukh Khan, Deepika Padukone.mp3",
     "cover": "/covers/titli.jpg",
-    "mood": "romantic"
+    "mood": "romantic",
+    "duration": 185
+  },
+   {
+    "id": 9,
+    "title": "Baarish",
+    "artist": "Atif Aslam",
+    "url": "/songs/Baarish by Atif Aslam   Half Girlfriend   Arjun Kapoor & Shraddha Kapoor   Tanishk Bagchi.m4a",
+    "cover": "/covers/baarish.jpg",
+    "mood": "pretty",
+    "duration": 185
+  },
+     {
+    "id": 10,
+    "title": "SAKI SAki",
+    "artist": "Neha Kakkar",
+    "url": "/songs/Full Song O SAKI SAKI   Batla House   Nora Fatehi, Tanishk B,Neha K,Tulsi K, B Praak,Vishal-Shekhar.mp3",
+    "cover": "/covers/sakhi.jpg",
+    "mood": "party",
+    "duration": 185
+  },
+   {
+    "id": 11,
+    "title": "Kasturi",
+    "artist": "Arijit Singh",
+    "url": "/songs/Kasturi   Amar Prem Ki Prem Kahani   Arijit Singh   Prasad S   Jio Cinema.mp3",
+    "cover": "/covers/kasturi.jpg",
+    "mood": "pretty",
+    "duration": 185
   }
   
 ]

@@ -1,54 +1,96 @@
 import React from "react";
+import { FaPlay, FaPlus, FaTrash } from "react-icons/fa";
 
-export default function SongList({ songs, likedSongs, toggleLike, setCurrentSong, onAddToQueue }) {
-  if (songs.length === 0) {
-    return <p>No songs to show.</p>;
-  }
-
+const SongList = ({
+  songs,
+  onSelectSong = () => {},
+  onAddToQueue = () => {},
+  toggleLike = () => {},
+  likedSongs = [],
+  showLike = true,
+  showDelete = false
+}) => {
   return (
-    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-      {songs.map((song) => {
-        const isLiked = likedSongs.includes(song.id);
-        return (
+    <div className="p-4 rounded-xl text-white overflow-y-auto max-h-[500px] custom-scrollbar">
+      <div className="hidden sm:grid grid-cols-5 text-sm border-b border-gray-700 pb-2 mb-2 font-semibold">
+        <span>Cover</span>
+        <span>Title</span>
+        <span>Artist</span>
+        <span>Time</span>
+        <span>Actions</span>
+      </div>
+
+      <div className="flex flex-col gap-3">
+        {songs.map((song) => (
           <div
             key={song.id}
-            className="bg-gray-800 p-3 rounded-lg shadow hover:bg-pink-600 transition cursor-pointer"
+            className="grid grid-cols-2 sm:grid-cols-5 text-sm items-center py-2 px-2 hover:bg-white/10 rounded transition-all cursor-pointer"
+            onClick={() => onSelectSong(song)}
           >
-            {/* Song cover */}
-            <img
-              src={song.cover}
-              alt={song.title}
-              onClick={() => setCurrentSong(song)}
-              className="w-full h-40 object-contain rounded mb-2"
-            />
-
-            {/* Song title & artist */}
-            <div onClick={() => setCurrentSong(song)}>
-              <h3 className="font-semibold truncate">{song.title}</h3>
-              <p className="text-sm text-gray-300 truncate">{song.artist}</p>
+            <div className="flex justify-center sm:justify-start">
+              <img
+                src={song.cover}
+                alt={song.title}
+                onError={(e) => {
+                  e.target.src = "/default-cover.jpg";
+                }}
+                className="w-12 h-12 rounded object-cover"
+              />
             </div>
 
-            {/* Like + Queue buttons in flex */}
-            <div className="mt-2 flex justify-between gap-2">
+            <span className="truncate">{song.title}</span>
+            <span className="hidden sm:block truncate">{song.artist}</span>
+            <span className="hidden sm:block">3:00</span>
+
+            <div
+              className="flex justify-center sm:justify-start gap-2"
+              onClick={(e) => e.stopPropagation()}
+            >
               <button
-                onClick={() => toggleLike(song.id)}
-                className={`flex-1 py-1 rounded text-sm ${
-                  isLiked ? "bg-red-500" : "bg-gray-700"
-                }`}
+                className="bg-green-600 hover:bg-green-700 text-white p-2 rounded"
+                onClick={() => onSelectSong(song)}
+                title="Play Song"
               >
-                {isLiked ? "❤️ Liked" : "♡ Like"}
+                <FaPlay />
               </button>
 
               <button
+                className="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded"
                 onClick={() => onAddToQueue(song)}
-                className="flex-1 py-1 rounded text-sm bg-blue-600 hover:bg-blue-700"
+                title="Add to Queue"
               >
-                ➕ Queue
+                <FaPlus />
               </button>
+
+              {showLike && (
+                <button
+                  className={`${
+                    likedSongs.includes(song.id)
+                      ? "bg-red-500 hover:bg-red-600"
+                      : "bg-gray-500 hover:bg-gray-600"
+                  } text-white p-2 rounded`}
+                  onClick={() => toggleLike(song.id)}
+                  title="Like / Unlike"
+                >
+                  {likedSongs.includes(song.id) ? "💔" : "❤️"}
+                </button>
+              )}
+
+              {showDelete && (
+                <button
+                  className="bg-red-700 hover:bg-red-800 text-white p-2 rounded"
+                  onClick={() => toggleLike(song.id)}
+                  title="Remove from Liked"
+                >
+                  <FaTrash />
+                </button>
+              )}
             </div>
           </div>
-        );
-      })}
+        ))}
+      </div>
     </div>
   );
-}
+};
+
+export default SongList;

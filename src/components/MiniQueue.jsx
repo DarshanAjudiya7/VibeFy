@@ -1,35 +1,47 @@
-import React from "react";
+import { FaTrash } from "react-icons/fa";
 
-const MiniQueue = ({ queue, onClearQueue, onRemoveFromQueue }) => {
-  if (queue.length === 0) return null;
-
+const MiniQueue = ({ queue, onRemoveFromQueue, onClearQueue }) => {
   return (
-    <div className="mb-6 bg-gray bg-opacity-40 p-4 rounded">
-      <div className="flex justify-between items-center mb-2">
-        <h2 className="text-xl font-semibold">🎧 Queue</h2>
+    <div className="bg-[#1f1f1f] p-4 rounded-xl text-white shadow-lg">
+      <div className="flex justify-between items-center mb-3">
+        <h2 className="text-lg font-semibold">🎧 Up Next</h2>
         <button
           onClick={onClearQueue}
-          className="text-sm px-2 py-1 bg-red-600 rounded hover:bg-red-700"
+          className="text-sm text-red-400 hover:underline focus:outline-none"
         >
           Clear
         </button>
       </div>
 
-      <ul className="space-y-2 text-sm">
-        {queue.map((song, index) => (
-          <li key={index} className="flex justify-between items-center">
-            <span>
-              {index + 1}. {song.title} — {song.artist}
-            </span>
-            <button
-              onClick={() => onRemoveFromQueue(song)}
-              className="ml-2 text-xs px-2 py-1 bg-gray-600 hover:bg-gray-700 rounded"
-            >
-              ❌
-            </button>
-          </li>
-        ))}
-      </ul>
+      {queue.length === 0 ? (
+        <p className="text-gray-400 text-sm">Queue is empty.</p>
+      ) : (
+        <ul className="space-y-3">
+          {queue.map((song) => (
+            <li key={song.id} className="flex justify-between items-center group">
+              <div className="flex items-center gap-3 overflow-hidden">
+                <img
+                  src={song.cover}
+                  alt={song.title}
+                  className="w-10 h-10 rounded shadow"
+                />
+                <div className="truncate">
+                  <p className="text-sm font-medium truncate">{song.title}</p>
+                  <p className="text-xs text-gray-400 truncate">{song.artist}</p>
+                </div>
+              </div>
+
+              <button
+                onClick={() => onRemoveFromQueue(song)}
+                title="Remove"
+                className="text-red-400 hover:text-red-500 transition"
+              >
+                <FaTrash />
+              </button>
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };

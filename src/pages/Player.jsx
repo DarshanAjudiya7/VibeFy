@@ -1,192 +1,102 @@
-import { useState, useEffect } from "react";
-import songs from "../data/songs.json";
-import SongList from "../components/SongList";
-import SearchBar from "../components/SearchBar";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  FaHeart,
+  FaPause,
+  FaPlay,
+  FaVolumeUp
+} from "react-icons/fa";
 
-import MiniQueue from "../components/MiniQueue";
-
-const moodBackgrounds = {
-  romantic: "linear-gradient(to left, #ff69b7, #ffb6c1)", // pink shades
-  sad: "linear-gradient(to right, #001f3f, #0074D9)", // dark blue shades
-  party: "linear-gradient(to right, #ff6a00, #ee0979)", // energetic colors
-  intense: "linear-gradient(to right, #8B0000, #FF0000)", // deep reds
-  default: "linear-gradient(to right, #228B22, #32CD32)" // green tones
-};
-
-
-const moodEmojis = {
-  romantic: "💗 Romantic",
-  sad: "😢 Sad",
-  party: "🎉 Party",
-  intense: "🔥 Intense",
-  default: "🎵 Music"
-};
-
-const filterBackgrounds = {
-  all: "linear-gradient(to right, #434343, #000000)",
-  liked: "linear-gradient(to right, #ff5f6d, #ffc371)",
-  recent: "linear-gradient(to right, #00c6ff, #0072ff)"
-};
-
-const Player = () => {
-  const [likedSongs, setLikedSongs] = useState(() => {
-    const saved = localStorage.getItem("likedSongs");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  const [recentSongs, setRecentSongs] = useState(() => {
-    const saved = localStorage.getItem("recentSongs");
-    return saved ? JSON.parse(saved) : [];
-  });
-
-  const [queue, setQueue] = useState([]);
-  const [filter, setFilter] = useState("all");
-  const [currentSong, setCurrentSong] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [artistFilter, setArtistFilter] = useState("All");
-  const [currentMood, setCurrentMood] = useState("default");
-  const [bgEffect, setBgEffect] = useState(moodBackgrounds["default"]);
+const Player = ({
+  currentSong,
+  isPlaying,
+  onPlayPauseClick,
+  likedSongs = [],
+  toggleLike = () => {},
+  onAddToQueue = () => {},
+  onSongEnd = () => {} // ✅ autoplay next
+}) => {
+  const [progress, setProgress] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const audioRef = useRef(null);
 
   useEffect(() => {
-    localStorage.setItem("likedSongs", JSON.stringify(likedSongs));
-  }, [likedSongs]);
+    if (audioRef.current) {
+      isPlaying
+        ? audioRef.current.play().catch(console.error)
+        : audioRef.current.pause();
+    }
+  }, [isPlaying, currentSong]);
 
-  useEffect(() => {
-    setBgEffect(moodBackgrounds[currentMood] || moodBackgrounds["default"]);
-  }, [currentMood]);
-
-  const toggleLike = (songId) => {
-    setLikedSongs((prev) =>
-      prev.includes(songId)
-        ? prev.filter((id) => id !== songId)
-        : [...prev, songId]
-    );
+  const handleTimeUpdate = () => {
+    setProgress(audioRef.current.currentTime);
   };
 
-  const handleSongPlay = (song) => {
-    setCurrentSong(song);
-    setCurrentMood(song.mood || "default");
-
-    setRecentSongs((prev) => {
-      const withoutDuplicate = prev.filter((s) => s.id !== song.id);
-      const updated = [song, ...withoutDuplicate].slice(0, 5);
-      localStorage.setItem("recentSongs", JSON.stringify(updated));
-      return updated;
-    });
+  const handleSeek = (e) => {
+    const value = e.target.value;
+    setProgress(value);
+    audioRef.current.currentTime = value;
   };
 
-  const handleQueueAdd = (song) => {
-    setQueue((prev) => {
-      if (!prev.find((s) => s.id === song.id)) {
-        return [...prev, song];
-      }
-      return prev;
-    });
+  const formatTime = (time) => {
+    const minutes = Math.floor(time / 60) || 0;
+    const seconds = Math.floor(time % 60) || 0;
+    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  const handleRemoveFromQueue = (song) => {
-    setQueue((prev) => prev.filter((s) => s.id !== song.id));
-  };
+  const isLiked = likedSongs.includes(currentSong?.id);
 
-  const artists = ["All", ...new Set(songs.map((s) => s.artist))];
-
-  let filteredSongs = songs;
-  if (filter === "liked") {
-    filteredSongs = filteredSongs.filter((song) =>
-      likedSongs.includes(song.id)
-    );
-  } else if (filter === "recent") {
-    filteredSongs = recentSongs;
-  }
-
-  filteredSongs = filteredSongs.filter((song) => {
-    const matchesSearch =
-      song.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      song.artist.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesArtist =
-      artistFilter === "All" || song.artist === artistFilter;
-    return matchesSearch && matchesArtist;
-  });
+  if (!currentSong) return null;
 
   return (
-    <div
-      className="relative min-h-screen text-white transition-all duration-500"
-      style={{
-        background: `${bgEffect}, ${filterBackgrounds[filter] || "#000000"}`,
-        backgroundBlendMode: "overlay"
-      }}
-    >
-      <div className="relative z-10 min-h-screen bg bg-opacity-40 p-6">
-        <h1 className="text-3xl font-bold mb-4">🎵 Music Player</h1>
+    <div className="w-full bg-[#1e1e1e] p-4 rounded-xl text-white space-y-4">
+      <audio
+        ref={audioRef}
+        src={currentSong.url}
+        onTimeUpdate={handleTimeUpdate}
+        onLoadedMetadata={() => setDuration(audioRef.current.duration)}
+        onEnded={onSongEnd} // ✅ correct callback for autoplay
+      />
 
-        <p className="mb-4 text-lg">
-          Mood: <span className="font-semibold">{moodEmojis[currentMood]}</span>
-        </p>
-
-        <div className="flex flex-wrap gap-4 mb-4">
-          <button
-            onClick={() => setFilter("all")}
-            className={`px-4 py-2 rounded ${filter === "all" ? "bg-blue-500" : "bg-gray-600"}`}
-          >
-            🎶 All Songs
-          </button>
-
-          <button
-            onClick={() => setFilter("liked")}
-            className={`px-4 py-2 rounded ${filter === "liked" ? "bg-red-500" : "bg-gray-600"}`}
-          >
-            ❤️ Liked ({likedSongs.length})
-          </button>
-
-          <button
-            onClick={() => setFilter("recent")}
-            className={`px-4 py-2 rounded ${filter === "recent" ? "bg-yellow-500" : "bg-gray-600"}`}
-          >
-            ⏱ Recently Played
-          </button>
+      <div className="flex flex-col sm:flex-row items-center gap-4">
+        <img
+          src={currentSong.cover}
+          alt={currentSong.title}
+          className="w-20 h-20 object-cover rounded-lg"
+        />
+        <div className="text-center sm:text-left">
+          <h3 className="text-lg font-semibold">{currentSong.title}</h3>
+          <p className="text-sm text-gray-300">{currentSong.artist}</p>
         </div>
+      </div>
 
-        <SearchBar
-          searchTerm={searchTerm}
-          setSearchTerm={setSearchTerm}
-          artistFilter={artistFilter}
-          setArtistFilter={setArtistFilter}
-          artists={artists}
-        />
+      <div className="flex items-center justify-between gap-4 flex-wrap">
+        <button onClick={onPlayPauseClick}>
+          {isPlaying ? <FaPause size={32} /> : <FaPlay size={32} />}
+        </button>
 
-        {currentSong ? (
-          <audio
-            src={currentSong.url}
-            controls
-            autoPlay
-            className="w-full mb-6"
-            onEnded={() => {
-              if (queue.length > 0) {
-                const [next, ...rest] = queue;
-                setQueue(rest);
-                handleSongPlay(next);
-              } else {
-                setCurrentSong(null);
-              }
-            }}
+        <button onClick={() => toggleLike(currentSong.id)}>
+          <FaHeart
+            size={20}
+            className={isLiked ? "text-pink-400 ml-4" : "text-gray-500 ml-4"}
           />
-        ) : (
-          <p className="mb-6">Select a song to play</p>
-        )}
+        </button>
 
-        <MiniQueue
-          queue={queue}
-          onClearQueue={() => setQueue([])}
-          onRemoveFromQueue={handleRemoveFromQueue}
-        />
+        <button onClick={() => onAddToQueue(currentSong)}>
+          <FaVolumeUp size={20} title="Add to Queue" />
+        </button>
+      </div>
 
-        <SongList
-          songs={filteredSongs}
-          likedSongs={likedSongs}
-          toggleLike={toggleLike}
-          setCurrentSong={handleSongPlay}
-          onAddToQueue={handleQueueAdd}
+      <div className="flex items-center gap-2 text-xs text-gray-400">
+        <span>{formatTime(progress)}</span>
+        <input
+          type="range"
+          min="0"
+          max={duration || 0}
+          value={progress}
+          onChange={handleSeek}
+          className="w-full accent-pink-400"
         />
+        <span>{formatTime(duration)}</span>
       </div>
     </div>
   );

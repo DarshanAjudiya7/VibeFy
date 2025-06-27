@@ -1,16 +1,22 @@
-<<<<<<< HEAD
-# React + Vite
+# 🎶 Music Player Web App
+Built with React.js and Tailwind CSS. Features include:
+- Local MP3 playback
+- Mood-based themes
+- Song queue, liked songs, search & audio controls
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Home Page
+![home](https://github.com/user-attachments/assets/4e021745-8aea-402f-87e5-8302d5b56e1b)
 
-Currently, two official plugins are available:
+First page All Songs
+![Default](https://github.com/user-attachments/assets/396ec9b0-67a8-46e4-8518-f7d74a5ea03c)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Liked Songs
+![liked](https://github.com/user-attachments/assets/ba350a62-9688-4504-8301-1f790b413717)
 
-## Expanding the ESLint configuration
+Recently added songs
+![recently](https://github.com/user-attachments/assets/645cecb8-2c27-48e5-b0cc-973291dc6807)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-=======
-# Music-Player
->>>>>>> 3e27d4e87c1fcaf93364aa299cc8b1aaf236035a
+Queue Feature
+![queue](https://github.com/user-attachments/assets/078b7ce7-494d-4fc5-80c6-0b850b63161e)
+
+
