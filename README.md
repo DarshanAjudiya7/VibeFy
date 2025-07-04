@@ -5,18 +5,23 @@ Built with React.js and Tailwind CSS. Features include:
 - Song queue, liked songs, search & audio controls
 
 Home Page
-![home](https://github.com/user-attachments/assets/4e021745-8aea-402f-87e5-8302d5b56e1b)
+![home](https://github.com/user-attachments/assets/753d2c78-3324-4d9b-9f84-69aa25baeb00)
 
 First page All Songs
-![Default](https://github.com/user-attachments/assets/396ec9b0-67a8-46e4-8518-f7d74a5ea03c)
+![mainpage](https://github.com/user-attachments/assets/e7dcbfab-21d7-4dde-a79b-d835d4d41999)
 
 Liked Songs
-![liked](https://github.com/user-attachments/assets/ba350a62-9688-4504-8301-1f790b413717)
-
-Recently added songs
-![recently](https://github.com/user-attachments/assets/645cecb8-2c27-48e5-b0cc-973291dc6807)
+![liked](https://github.com/user-attachments/assets/702d0055-2203-40f5-8003-0affe8fbd86d)
 
 Queue Feature
-![queue](https://github.com/user-attachments/assets/078b7ce7-494d-4fc5-80c6-0b850b63161e)
+
+![upnext](https://github.com/user-attachments/assets/dcab4f76-5131-40f6-8599-ddaafdcbe321)
+
+Current Play Song
+
+![current](https://github.com/user-attachments/assets/4cfed0ef-109c-4ad6-b0ac-8e955dcb7305)
+
+
+
 
 

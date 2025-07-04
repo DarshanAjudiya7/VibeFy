@@ -97,6 +97,34 @@
     "cover": "/covers/kasturi.jpg",
     "mood": "pretty",
     "duration": 185
+  },
+  {
+    "id": 12,
+    "title": "Sooraj Dooba Hain",
+    "artist": "Arijit Singh",
+    "url": "/songs/'Sooraj Dooba Hain' FULL VIDEO SONG   Arijit singh Aditi Singh Sharma   T-SERIES (1).mp3",
+    "cover": "/covers/sooraj.jpg",
+    "mood": "party",
+    "duration": 185
+  },
+    {
+    "id": 13,
+    "title": "Oonchi Oonchi Deewar ",
+    "artist": "Arijit Singh",
+    "url": "/songs/Oonchi Oonchi Deewarein (Full Video) Meezaan,Anaswara  Arijit Singh, Manan  Radhika,Vinay Bhushan K.m4a",
+    "cover": "/covers/oonchi.jpg",
+    "mood": "sad",
+    "duration": 185
+  },
+    {
+    "id": 14,
+    "title": "Lat Lag Gayee",
+    "artist": "Pritam",
+    "url": "/songs/Lat Lag Gayee Lyrical - Race 2   Saif Ali Khan, Jacqueline   Benny Dayal, Shalmali   Pritam   Party.mp3",
+    "cover": "/covers/lat.jpg",
+    "mood": "intense",
+    "duration": 185
   }
+  
   
 ]
