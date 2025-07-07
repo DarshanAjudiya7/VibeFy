@@ -17,6 +17,11 @@ Queue Feature
 
 ![upnext](https://github.com/user-attachments/assets/dcab4f76-5131-40f6-8599-ddaafdcbe321)
 
+Stats Feature
+
+![stats](https://github.com/user-attachments/assets/568289dc-af4e-4fb7-92d5-952949d03e38)
+
+
 Current Play Song
 
 ![current](https://github.com/user-attachments/assets/4cfed0ef-109c-4ad6-b0ac-8e955dcb7305)

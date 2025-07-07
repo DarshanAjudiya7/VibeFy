@@ -8,12 +8,12 @@ import NowPlayingCard from '../components/NowPlayingCard';
 import songs from '../data/songs.json';
 
 const moodGradients = {
-  romantic: "from-pink-400 via-rose-300 to-pink-200",
-  sad: "from-blue-600 via-indigo-500 to-gray-500",
-  party: "from-[#ff00cc] via-[#333399] to-[#ffcc00]",
-  intense: "from-red-700 via-pink-700 to-red-400",
-  pretty: "from-[#4b6cb7] via-[#182848] to-[#355c7d]",
-  default: "from-green-300 via-teal-200 to-green-100"
+  romantic: "from-[#6a1b9a] via-[#4a148c] to-[#2c003e]",
+  sad: "from-[#0d47a1] via-[#1a237e] to-[#263238]",
+  party: "from-[#8e24aa] via-[#4a148c] to-[#1b0058]",
+  intense: "from-[#b71c1c] via-[#880e4f] to-[#311b92]",
+  pretty: "from-[#37474f] via-[#263238] to-[#1c1c1c]",
+  default: "from-[#1b5e20] via-[#004d40] to-[#00251a]"
 };
 
 const MainLayout = () => {
@@ -174,7 +174,7 @@ const MainLayout = () => {
           }
           50% {
             transform: scale(1.5);
-            opacity: 1;
+            opacity: 0;
             filter: blur(3px);
           }
           100% {

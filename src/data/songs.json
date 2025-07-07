@@ -4,7 +4,7 @@
     "title": "Kesariya",
     "artist": "Arijit Singh",
     "url": "/songs/Kesariya.mp3",
-    "cover": "/covers/Kesariys.jpg",
+    "cover": "/covers/kesariya.jpeg",
     "mood": "romantic",
     "duration": 185
   },
@@ -47,7 +47,7 @@
   {
     "id": 6,
     "title": "Bairiyaa",
-    "artist": "Arijit Singh",
+    "artist": "Atif Aslam",
     "url": "/songs/Bairiyaa   Ramaiya Vastavaiya   Girish Kumar & Shruti Haasan   Atif Aslam, Shreya Ghoshal.mp3",
     "cover": "/covers/Bairiyaa.jpg",
     "mood": "romantic",
@@ -124,7 +124,17 @@
     "cover": "/covers/lat.jpg",
     "mood": "intense",
     "duration": 185
+  },
+   {
+    "id": 15,
+    "title": "Paniyon sa",
+    "artist": "Tulsi Kumar",
+    "url": "/songs/PANIYON SA Full Song   Satyameva Jayate    John Abraham   Aisha Sharma   Tulsi Kumar   Atif Aslam.mp3",
+    "cover": "/covers/paniyosa.jpg",
+    "mood": "intense",
+    "duration": 185
   }
+  
   
   
 ]

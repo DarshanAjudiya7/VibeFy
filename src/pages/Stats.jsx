@@ -64,7 +64,7 @@ const StatsPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#1db954] via-black to-[#121212] p-6 text-white space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-[#5ac7d8] via-gray to-[#d59413] p-6 text-white space-y-6">
       <button
         onClick={() => navigate("/player")}
         className="text-sm bg-black bg-opacity-40 px-3 py-1 rounded hover:bg-opacity-60"
