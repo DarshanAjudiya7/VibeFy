@@ -3,39 +3,41 @@ import {
   FaHeart,
   FaPause,
   FaPlay,
-  FaVolumeUp
+  FaStepForward,
+  FaStepBackward,
+  FaRandom,
+  FaRedo
 } from "react-icons/fa";
+import { usePlayer } from "../context/PlayerContext";
+import { AnimatePresence, motion } from "framer-motion";
+
 
 const Player = ({
-  currentSong,
-  isPlaying,
-  onPlayPauseClick,
   likedSongs = [],
   toggleLike = () => {},
-  onAddToQueue = () => {},
-  onSongEnd = () => {} // ✅ autoplay next
+  isRepeating = false,
+  setIsRepeating = () => {},
 }) => {
-  const [progress, setProgress] = useState(0);
-  const [duration, setDuration] = useState(0);
-  const audioRef = useRef(null);
+  const [isShuffled, setIsShuffled] = useState(false);
+  // Remove local isRepeating state
 
-  useEffect(() => {
-    if (audioRef.current) {
-      isPlaying
-        ? audioRef.current.play().catch(console.error)
-        : audioRef.current.pause();
-    }
-  }, [isPlaying, currentSong]);
+  const {
+    currentSong,
+    isPlaying,
+    playlist,
+    currentIndex,
+    queue,
+    playNext,
+    playPrevious,
+    togglePlayPause,
+    handleSongEnd,
+    addToQueue,
+    progress = 0,
+    duration = 0,
+    setProgress = () => {},
+  } = usePlayer();
 
-  const handleTimeUpdate = () => {
-    setProgress(audioRef.current.currentTime);
-  };
-
-  const handleSeek = (e) => {
-    const value = e.target.value;
-    setProgress(value);
-    audioRef.current.currentTime = value;
-  };
+  const handleSeek = (e) => setProgress(Number(e.target.value));
 
   const formatTime = (time) => {
     const minutes = Math.floor(time / 60) || 0;
@@ -43,62 +45,127 @@ const Player = ({
     return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
   };
 
-  const isLiked = likedSongs.includes(currentSong?.id);
+  const handlePrevious = () => {
+    if (progress > 3) {
+      setProgress(0);
+    } else {
+      playPrevious();
+    }
+  };
+
+  const handleNext = playNext;
+
+  const isLiked = currentSong ? likedSongs.includes(currentSong.id) : false;
+  const canGoPrevious = playlist.length > 0 && currentIndex > 0;
+  const canGoNext = queue.length > 0 || (playlist.length > 0 && currentIndex < playlist.length - 1);
 
   if (!currentSong) return null;
 
   return (
-    <div className="w-full bg-[#1e1e1e] p-4 rounded-xl text-white space-y-4">
-      <audio
-        ref={audioRef}
-        src={currentSong.url}
-        onTimeUpdate={handleTimeUpdate}
-        onLoadedMetadata={() => setDuration(audioRef.current.duration)}
-        onEnded={onSongEnd} // ✅ correct callback for autoplay
-      />
-
-      <div className="flex flex-col sm:flex-row items-center gap-4">
-        <img
-          src={currentSong.cover}
-          alt={currentSong.title}
-          className="w-20 h-20 object-cover rounded-lg"
-        />
-        <div className="text-center sm:text-left">
-          <h3 className="text-lg font-semibold">{currentSong.title}</h3>
-          <p className="text-sm text-gray-300">{currentSong.artist}</p>
-        </div>
-      </div>
-
-      <div className="flex items-center justify-between gap-4 flex-wrap">
-        <button onClick={onPlayPauseClick}>
-          {isPlaying ? <FaPause size={32} /> : <FaPlay size={32} />}
-        </button>
-
-        <button onClick={() => toggleLike(currentSong.id)}>
-          <FaHeart
-            size={20}
-            className={isLiked ? "text-pink-400 ml-4" : "text-gray-500 ml-4"}
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={currentSong.id}
+        initial={{ y: 60, opacity: 0 }}
+        animate={{ y: 0, opacity: 1 }}
+        exit={{ y: 60, opacity: 0 }}
+        transition={{ type: "spring", stiffness: 80, damping: 18 }}
+        className="w-full mb-15 max-w-xs mx-auto bg-gradient-to-br from-[#2d193c] via-[#3a2352] to-[#1a1027] p-3 rounded-2xl text-white shadow-xl border border-purple-900 flex flex-col items-center space-y-4"
+      >
+        {/* Song Info Row */}
+        <div className="flex flex-row items-center w-full gap-3">
+          <img
+            src={currentSong.cover}
+            alt={currentSong.title}
+            className="w-30 h-16 object-cover rounded-xl shadow-md border-2 border-[#333]"
           />
-        </button>
+          <div className="flex-1 min-w-0">
+            <h3 className="text-base font-bold truncate w-full drop-shadow-lg">{currentSong.title}</h3>
+            <p className="text-xs text-gray-300 truncate w-full">{currentSong.artist}</p>
+            <div className="flex items-center gap-2 mt-1">
+              <span className="text-xs text-gray-400">
+                {currentIndex + 1} of {playlist.length + queue.length}
+              </span>
+              {queue.length > 0 && (
+                <span className="text-xs text-green-400">
+                  +{queue.length} in queue
+                </span>
+              )}
+            </div>
+          </div>
+        </div>
 
-        <button onClick={() => onAddToQueue(currentSong)}>
-          <FaVolumeUp size={20} title="Add to Queue" />
-        </button>
-      </div>
+        {/* Main Controls */}
+        <div className="flex items-center justify-center gap-4 w-full">
+          {/* Shuffle Button */}
+          <button
+            onClick={() => setIsShuffled(!isShuffled)}
+            className={`transition-colors ${isShuffled ? 'text-green-300' : 'text-gray-400 hover:text-white'}`}
+            title="Shuffle"
+          >
+            <FaRandom size={14} />
+          </button>
 
-      <div className="flex items-center gap-2 text-xs text-gray-400">
-        <span>{formatTime(progress)}</span>
-        <input
-          type="range"
-          min="0"
-          max={duration || 0}
-          value={progress}
-          onChange={handleSeek}
-          className="w-full accent-pink-400"
-        />
-        <span>{formatTime(duration)}</span>
-      </div>
-    </div>
+          {/* Previous Button */}
+          <button
+            onClick={handlePrevious}
+            disabled={!canGoPrevious}
+            className={`transition-colors ${canGoPrevious ? 'text-white hover:text-green-400' : 'text-gray-600'}`}
+            title="Previous"
+          >
+            <FaStepBackward size={18} />
+          </button>
+
+          {/* Play/Pause Button */}
+          <button
+            onClick={togglePlayPause}
+            className="bg-green-400 hover:bg-green-500 text-white p-2 rounded-full transition-colors shadow-lg border-2 border-green-500"
+            title={isPlaying ? "Pause" : "Play"}
+          >
+            {isPlaying ? <FaPause size={20} /> : <FaPlay size={20} />}
+          </button>
+
+          {/* Next Button */}
+          <button
+            onClick={handleNext}
+            disabled={!canGoNext}
+            className={`transition-colors ${canGoNext ? 'text-white hover:text-green-400' : 'text-gray-600'}`}
+            title="Next"
+          >
+            <FaStepForward size={18} />
+          </button>
+
+          {/* Repeat Button */}
+          {/* <button
+            onClick={() => setIsRepeating(!isRepeating)}
+            className={`transition-colors ${isRepeating ? 'text-green-400 scale-110' : 'text-gray-400 hover:text-white'}`}
+            title="Repeat"
+          >
+            <FaRedo size={14} />
+          </button> */}
+        </div>
+
+        {/* Like and Queue Controls */}
+        {/* <div className="flex items-center gap-4 w-full justify-center">
+          <button 
+            onClick={() => toggleLike(currentSong.id)}
+            className="transition-colors hover:scale-110"
+            title={isLiked ? "Remove from Liked" : "Add to Liked"}
+          >
+            <FaHeart
+              size={18}
+              className={isLiked ? "text-pink-400" : "text-gray-500 hover:text-pink-400"}
+            />
+          </button>
+          <button 
+            onClick={() => addToQueue(currentSong)}
+            className="transition-colors hover:scale-110"
+            title="Add to Queue"
+          >
+            <FaStepForward size={18} className="text-gray-400 hover:text-white" />
+          </button>
+        </div> */}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

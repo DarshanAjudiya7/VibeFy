@@ -31,8 +31,10 @@ const NowPlayingCard = ({ song }) => {
           animate={{ scale: 1 }}
           transition={{ delay: 0.2 }}
         >
-          <div className="text-lg sm:text-xl font-bold">{song.title}</div>
-          <div className="text-sm text-gray-200">{song.artist}</div>
+          <div className="w-full overflow-hidden">
+            <div className="text-lg sm:text-xl font-bold truncate whitespace-nowrap">{song.title}</div>
+            <div className="text-sm text-gray-200 truncate whitespace-nowrap">{song.artist}</div>
+          </div>
           {song.mood && (
             <div className="mt-2 text-sm sm:text-base text-pink-100">
               Mood: <span className="font-semibold">{song.mood}</span>

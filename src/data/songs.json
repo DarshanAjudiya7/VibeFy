@@ -1,24 +1,6 @@
 [
   {
     "id": 1,
-    "title": "Kesariya",
-    "artist": "Arijit Singh",
-    "url": "/songs/Kesariya.mp3",
-    "cover": "/covers/kesariya.jpeg",
-    "mood": "romantic",
-    "duration": 185
-  },
-  {
-    "id": 2,
-    "title": "Shiddat",
-    "artist": "Arijit Singh",
-    "url": "/songs/Shiddat.mp3",
-    "cover": "/covers/Shiddat.jpg",
-    "mood": "intense",
-    "duration": 190
-  },
-  {
-    "id": 3,
     "title": "Roke Na Ruke Naina",
     "artist": "Arijit Singh",
     "url": "/songs/Roke Na Ruke Naina (Full Audio Song)   Arijit Singh   Varun, Alia    Badrinath Ki Dulhania.mp3",
@@ -27,16 +9,25 @@
     "duration": 210
   },
   {
-    "id": 4,
-    "title": "Saathiya",
+    "id": 2,
+    "title": "Kesariya",
     "artist": "Arijit Singh",
-    "url": "/songs/Saathiya   Singham   Ajay Devgan, Kajal Aggarwal.mp3",
-    "cover": "/covers/Saathiya.jpg",
+    "url": "/songs/Kesariya.mp3",
+    "cover": "/covers/kesariya.jpeg",
     "mood": "romantic",
-    "duration": 200
+    "duration": 185
   },
   {
-    "id": 5,
+    "id": 3,
+    "title": "Baarish",
+    "artist": "Atif Aslam",
+    "url": "/songs/Baarish by Atif Aslam   Half Girlfriend   Arjun Kapoor & Shraddha Kapoor   Tanishk Bagchi.m4a",
+    "cover": "/covers/baarish.jpg",
+    "mood": "pretty",
+    "duration": 185
+  },
+  {
+    "id": 4,
     "title": "Sau Tarah ke",
     "artist": "Arijit Singh",
     "url": "/songs/Sau Tarah Ke Full Video Song   Dishoom   John Abraham   Varun Dhawan   Jacqueline Fernandez  Pritam.mp3",
@@ -45,52 +36,34 @@
     "duration": 175
   },
   {
+    "id": 5,
+    "title": "Lat Lag Gayee",
+    "artist": "Pritam",
+    "url": "/songs/Lat Lag Gayee Lyrical - Race 2   Saif Ali Khan, Jacqueline   Benny Dayal, Shalmali   Pritam   Party.mp3",
+    "cover": "/covers/lat.jpg",
+    "mood": "intense",
+    "duration": 185
+  },
+  {
     "id": 6,
-    "title": "Bairiyaa",
-    "artist": "Atif Aslam",
-    "url": "/songs/Bairiyaa   Ramaiya Vastavaiya   Girish Kumar & Shruti Haasan   Atif Aslam, Shreya Ghoshal.mp3",
-    "cover": "/covers/Bairiyaa.jpg",
-    "mood": "romantic",
-    "duration": 198
+    "title": "Oonchi Oonchi Deewar ",
+    "artist": "Arijit Singh",
+    "url": "/songs/Oonchi Oonchi Deewarein (Full Video) Meezaan,Anaswara  Arijit Singh, Manan  Radhika,Vinay Bhushan K.m4a",
+    "cover": "/covers/oonchi.jpg",
+    "mood": "sad",
+    "duration": 185
   },
   {
     "id": 7,
-    "title": "Balam Pichkari",
+    "title": "Saathiya",
     "artist": "Arijit Singh",
-    "url": "/songs/Balam-Pichkari-Ft-Rang-Barse-Mashup-(Club-Remix)_320(PaglaSongs).mp3",
-    "cover": "/covers/Balam Pichkari.jpg",
+    "url": "/songs/Saathiya   Singham   Ajay Devgan, Kajal Aggarwal.mp3",
+    "cover": "/covers/Saathiya.jpg",
     "mood": "romantic",
-    "duration": 165
+    "duration": 200
   },
   {
     "id": 8,
-    "title": "Titli",
-    "artist": "Arijit Singh",
-    "url": "/songs/Titli Chennai Express Full Video Song   Shahrukh Khan, Deepika Padukone.mp3",
-    "cover": "/covers/titli.jpg",
-    "mood": "romantic",
-    "duration": 185
-  },
-   {
-    "id": 9,
-    "title": "Baarish",
-    "artist": "Atif Aslam",
-    "url": "/songs/Baarish by Atif Aslam   Half Girlfriend   Arjun Kapoor & Shraddha Kapoor   Tanishk Bagchi.m4a",
-    "cover": "/covers/baarish.jpg",
-    "mood": "pretty",
-    "duration": 185
-  },
-     {
-    "id": 10,
-    "title": "SAKI SAki",
-    "artist": "Neha Kakkar",
-    "url": "/songs/Full Song O SAKI SAKI   Batla House   Nora Fatehi, Tanishk B,Neha K,Tulsi K, B Praak,Vishal-Shekhar.mp3",
-    "cover": "/covers/sakhi.jpg",
-    "mood": "party",
-    "duration": 185
-  },
-   {
-    "id": 11,
     "title": "Kasturi",
     "artist": "Arijit Singh",
     "url": "/songs/Kasturi   Amar Prem Ki Prem Kahani   Arijit Singh   Prasad S   Jio Cinema.mp3",
@@ -99,7 +72,52 @@
     "duration": 185
   },
   {
+    "id": 9,
+    "title": "SAKI SAki",
+    "artist": "Neha Kakkar",
+    "url": "/songs/Full Song O SAKI SAKI   Batla House   Nora Fatehi, Tanishk B,Neha K,Tulsi K, B Praak,Vishal-Shekhar.mp3",
+    "cover": "/covers/sakhi.jpg",
+    "mood": "party",
+    "duration": 185
+  },
+  {
+    "id": 10,
+    "title": "Paniyon sa",
+    "artist": "Tulsi Kumar",
+    "url": "/songs/PANIYON SA Full Song   Satyameva Jayate    John Abraham   Aisha Sharma   Tulsi Kumar   Atif Aslam.mp3",
+    "cover": "/covers/paniyosa.jpg",
+    "mood": "intense",
+    "duration": 185
+  },
+  {
+    "id": 11,
+    "title": "Dhun lagi",
+    "artist": "Sachin-Jigar",
+    "url": "/songs/Dhun Laagi _ Full Audio Song _ Love Ni Bhavai _ Sachin-Jigar _ Siddharth Amit Bhavsar.mp3",
+    "cover": "/covers/dhun.jpg",
+    "mood": "sad",
+    "duration": 185
+  },
+  {
     "id": 12,
+    "title": "Bairiyaa",
+    "artist": "Atif Aslam",
+    "url": "/songs/Bairiyaa   Ramaiya Vastavaiya   Girish Kumar & Shruti Haasan   Atif Aslam, Shreya Ghoshal.mp3",
+    "cover": "/covers/Bairiyaa.jpg",
+    "mood": "romantic",
+    "duration": 198
+  },
+  {
+    "id": 13,
+    "title": "Soach Na Sake",
+    "artist": "Arijit Sing & Tulsi Kumar",
+    "url": "/songs/SIMMBA Tere Bin Lyrical   Ranveer Singh, Sara Ali Khan   Tanishk B, Rahat Fateh Ali Khan, Asees K.mp3",
+    "cover": "/covers/tere bin.jpg",
+    "mood": "pretty",
+    "duration": 185
+  },
+  {
+    "id": 14,
     "title": "Sooraj Dooba Hain",
     "artist": "Arijit Singh",
     "url": "/songs/'Sooraj Dooba Hain' FULL VIDEO SONG   Arijit singh Aditi Singh Sharma   T-SERIES (1).mp3",
@@ -107,34 +125,58 @@
     "mood": "party",
     "duration": 185
   },
-    {
-    "id": 13,
-    "title": "Oonchi Oonchi Deewar ",
+  {
+    "id": 15,
+    "title": "Shiddat",
     "artist": "Arijit Singh",
-    "url": "/songs/Oonchi Oonchi Deewarein (Full Video) Meezaan,Anaswara  Arijit Singh, Manan  Radhika,Vinay Bhushan K.m4a",
-    "cover": "/covers/oonchi.jpg",
+    "url": "/songs/Shiddat.mp3",
+    "cover": "/covers/Shiddat.jpg",
+    "mood": "intense",
+    "duration": 190
+  },
+  {
+    "id": 16,
+    "title": "Simroon Tera Naam",
+    "artist": "Sachet Tandon",
+    "url": "/songs/Simroon Tera Naam (Slowed + Reverb)   Sachet Tandon   Yaariyan 2   SR Lofi.mp3",
+    "cover": "/covers/simroon.jpg",
     "mood": "sad",
     "duration": 185
   },
-    {
-    "id": 14,
-    "title": "Lat Lag Gayee",
-    "artist": "Pritam",
-    "url": "/songs/Lat Lag Gayee Lyrical - Race 2   Saif Ali Khan, Jacqueline   Benny Dayal, Shalmali   Pritam   Party.mp3",
-    "cover": "/covers/lat.jpg",
-    "mood": "intense",
+  {
+    "id": 17,
+    "title": "Balam Pichkari",
+    "artist": "Arijit Singh",
+    "url": "/songs/Balam-Pichkari-Ft-Rang-Barse-Mashup-(Club-Remix)_320(PaglaSongs).mp3",
+    "cover": "/covers/Balam Pichkari.jpg",
+    "mood": "romantic",
+    "duration": 165
+  },
+  {
+    "id": 18,
+    "title": "Titli",
+    "artist": "Arijit Singh",
+    "url": "/songs/Titli Chennai Express Full Video Song   Shahrukh Khan, Deepika Padukone.mp3",
+    "cover": "/covers/titli.jpg",
+    "mood": "romantic",
     "duration": 185
   },
-   {
-    "id": 15,
-    "title": "Paniyon sa",
-    "artist": "Tulsi Kumar",
-    "url": "/songs/PANIYON SA Full Song   Satyameva Jayate    John Abraham   Aisha Sharma   Tulsi Kumar   Atif Aslam.mp3",
-    "cover": "/covers/paniyosa.jpg",
-    "mood": "intense",
+  {
+    "id": 19,
+    "title": "Chaleya",
+    "artist": "Anirudh",
+    "url": "/songs/Jawan  Chaleya (Lyrical Video)   Shah Rukh Khan   Nayanthara   Atlee   Anirudh   Arijit S, Shilpa R.mp3",
+    "cover": "/covers/chaleya.jpg",
+    "mood": "romantic",
+    "duration": 185
+  },
+  {
+    "id": 20,
+    "title": "Soach Na Sake",
+    "artist": "Arijit Sing & Tulsi Kumar",
+    "url": "/songs/Soch Na Sake FULL VIDEO SONG   AIRLIFT   Akshay Kumar, Nimrat Kaur   Arijit Singh, Tulsi Kumar.mp3",
+    "cover": "/covers/soch na sake.jpg",
+    "mood": "romantic",
     "duration": 185
   }
-  
-  
-  
 ]

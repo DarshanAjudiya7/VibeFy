@@ -13,11 +13,11 @@ const MiniQueue = ({ queue, onRemoveFromQueue, onClearQueue }) => {
         </button>
       </div>
 
-      {queue.length === 0 ? (
+      {queue && queue.length === 0 ? (
         <p className="text-gray-400 text-sm">Queue is empty.</p>
       ) : (
         <ul className="space-y-3">
-          {queue.map((song) => (
+          {queue && queue.map((song) => (
             <li key={song.id} className="flex justify-between items-center group">
               <div className="flex items-center gap-3 overflow-hidden">
                 <img
@@ -32,7 +32,7 @@ const MiniQueue = ({ queue, onRemoveFromQueue, onClearQueue }) => {
               </div>
 
               <button
-                onClick={() => onRemoveFromQueue(song)}
+                onClick={() => onRemoveFromQueue(song.id)}
                 title="Remove"
                 className="text-red-400 hover:text-red-500 transition"
               >
