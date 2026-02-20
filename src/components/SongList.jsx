@@ -1,105 +1,177 @@
-import React from "react";
-import { FaPlay, FaPlus, FaHeart, FaRegHeart, FaTrash } from "react-icons/fa";
-import SongCard from "./SongCard";
+import { useState, useRef, useEffect } from "react";
+import { FaPlay, FaPause, FaPlus, FaHeart, FaRegHeart, FaPlusCircle } from "react-icons/fa";
+import { usePlayer } from "../context/PlayerContext";
+import CreatePlaylistModal from "./CreatePlaylistModal";
 
 const SongList = ({
   songs,
-  onSelectSong = () => {},
-  onAddToQueue = () => {},
-  toggleLike = () => {},
+  onSelectSong = () => { },
+  onAddToQueue = () => { },
+  toggleLike = () => { },
   likedSongs = [],
-  showLike = true,
-  showDelete = false
 }) => {
+  const { userPlaylists, addSongToPlaylist, isPlaying, togglePlayPause, currentSong } = usePlayer();
+  const [activeMenu, setActiveMenu] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalSong, setModalSong] = useState(null);
+  const menuRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setActiveMenu(null);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const handleCreateNewFromSong = (song) => {
+    setModalSong(song);
+    setIsModalOpen(true);
+    setActiveMenu(null);
+  };
+
   return (
-    <div className="p-2 md:p-4 rounded-xl text-white mb-20">
-      {/* Mobile grid view */}
-      <div className="grid grid-cols-2 gap-3 sm:hidden">
-        {songs.map((song) => (
-          <SongCard
-            key={song.id}
-            song={song}
-            onPlay={onSelectSong}
-            liked={likedSongs.includes(song.id)}
-            onLikeToggle={toggleLike}
-          />
-        ))}
+    <div className="w-full text-[#b3b3b3] text-sm pb-10">
+      {/* Table Header */}
+      <div className="grid grid-cols-[16px_4fr_1fr_48px] gap-4 px-4 py-2 border-b border-white/10 mb-4 font-medium uppercase tracking-wider text-[11px]">
+        <div className="flex justify-center">#</div>
+        <div>Title</div>
+        <div className="hidden md:block">Artist</div>
+        <div className="flex justify-center">
+          <FaRegHeart />
+        </div>
       </div>
-      {/* Desktop table/list view */}
-      <div className="hidden sm:grid grid-cols-5 text-sm border-b border-gray-700 pb-2 mb-2 font-bold">
-        <span>Cover</span>
-        <span>Title</span>
-        <span>Artist</span>
-        <span>Time</span>
-        <span>Actions</span>
-      </div>
-      <div className="hidden sm:flex flex-col gap-3">
-        {songs.map((song) => (
-          <div
-            key={song.id}
-            className="grid grid-cols-2 sm:grid-cols-5 text-sm items-center py-2 px-2 hover:bg-white/10 rounded transition-all"
-          >
-            <div className="flex justify-center sm:justify-start">
-              <img
-                src={song.cover}
-                alt={song.title}
-                onError={(e) => {
-                  e.target.src = "/default-cover.jpg";
-                }}
-                className="w-16 h-16 rounded object-cover"
-              />
-            </div>
-            <span className="truncate">{song.title}</span>
-            <span className="hidden sm:block truncate">{song.artist}</span>
-            <span className="hidden sm:block">3:00</span>
-            <div className="flex justify-center sm:justify-start gap-2">
-              {/* Modern Play Button */}
-              <button
-                className="p-2 rounded-full bg-white/10 hover:bg-green-500/80 active:bg-green-600/90 shadow-lg ring-1 ring-green-400/30 focus:outline-none focus:ring-2 focus:ring-green-400 transition-all backdrop-blur-md"
-                onClick={() => onSelectSong(song)}
-                title="Play Song"
-              >
-                <FaPlay className="text-green-400 group-hover:text-white text-lg drop-shadow" />
-              </button>
-              {/* Modern Queue Button */}
-              <button
-                className="p-2 rounded-full bg-white/10 hover:bg-blue-500/80 active:bg-blue-600/90 shadow-lg ring-1 ring-blue-400/30 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all backdrop-blur-md"
-                onClick={() => onAddToQueue(song)}
-                title="Add to Queue"
-              >
-                <FaPlus className="text-blue-400 group-hover:text-white text-lg drop-shadow" />
-              </button>
-              {/* Modern Like Button */}
-              {showLike && (
+
+      {/* Table Body */}
+      <div className="flex flex-col">
+        {songs.map((song, index) => {
+          const isCurrentActive = currentSong?.id === song.id;
+
+          return (
+            <div
+              key={song.id}
+              onClick={() => isCurrentActive ? togglePlayPause() : onSelectSong(song)}
+              className="grid grid-cols-[16px_4fr_1fr_48px] gap-4 px-4 py-2 items-center hover:bg-white/10 rounded-md transition-colors group cursor-pointer relative"
+            >
+              {/* Index / Play Button */}
+              <div className="flex justify-center items-center relative h-10 w-4">
+                <span className={`group-hover:hidden transition-opacity ${isCurrentActive ? "text-[#1db954] font-bold" : ""}`}>
+                  {index + 1}
+                </span>
+                <div className="hidden group-hover:block text-white text-[10px]">
+                  {isCurrentActive && isPlaying ? <FaPause /> : <FaPlay />}
+                </div>
+              </div>
+
+              {/* Title & Cover */}
+              <div className="flex items-center gap-4 overflow-hidden">
+                <img
+                  src={song.cover}
+                  alt={song.title}
+                  className="w-10 h-10 rounded shadow-lg object-cover flex-shrink-0"
+                  onError={(e) => {
+                    e.target.src = "/covers/default.jpg";
+                  }}
+                />
+                <div className="flex flex-col overflow-hidden">
+                  <span className={`font-medium truncate group-hover:underline ${isCurrentActive ? "text-[#1db954]" : "text-white"}`}>
+                    {song.title}
+                  </span>
+                  <span className="md:hidden text-xs truncate">{song.artist}</span>
+                </div>
+              </div>
+
+              {/* Artist (Desktop) */}
+              <div className="hidden md:block truncate hover:text-white transition-colors">
+                {song.artist}
+              </div>
+
+              {/* Actions */}
+              <div className="flex items-center justify-center gap-4 relative">
                 <button
-                  className={`p-2 rounded-full shadow-lg ring-1 focus:outline-none focus:ring-2 transition-all backdrop-blur-md ${
-                    likedSongs.includes(song.id)
-                      ? "bg-pink-500/80 hover:bg-pink-600/90 focus:ring-pink-400 ring-pink-400/30"
-                      : "bg-white/10 hover:bg-gray-600/80 focus:ring-gray-400 ring-gray-400/30"
-                  }`}
-                  onClick={() => toggleLike(song.id)}
-                  title={likedSongs.includes(song.id) ? "Unlike" : "Like"}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    toggleLike(song.id);
+                  }}
+                  className={`transition-all ${likedSongs.includes(song.id) ? 'opacity-100 text-[#1db954]' : 'opacity-0 group-hover:opacity-100 text-[#b3b3b3] hover:text-white'}`}
                 >
                   {likedSongs.includes(song.id) ? (
-                    <FaHeart className="text-white text-lg drop-shadow" />
+                    <FaHeart />
                   ) : (
-                    <FaRegHeart className="text-pink-400 text-lg drop-shadow" />
+                    <FaRegHeart />
                   )}
                 </button>
-              )}
-              {showDelete && (
-                <button
-                  className="p-2 rounded-full bg-red-700 hover:bg-red-800 focus:outline-none focus:ring-2 focus:ring-red-400 transition"
-                  onClick={() => toggleLike(song.id)}
-                  title="Remove from Liked"
-                >
-                  <FaTrash className="text-white text-lg" />
-                </button>
-              )}
+
+                <div className="relative">
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      setActiveMenu(activeMenu === song.id ? null : song.id);
+                    }}
+                    className="opacity-0 group-hover:opacity-100 text-[#b3b3b3] hover:text-white transition-all transform hover:scale-110 p-1"
+                  >
+                    <FaPlus size={12} />
+                  </button>
+
+                  {activeMenu === song.id && (
+                    <div
+                      ref={menuRef}
+                      className="absolute right-0 bottom-full mb-2 w-48 bg-[#282828] rounded-md shadow-2xl z-50 border border-white/10 overflow-hidden"
+                    >
+                      <div className="p-2 border-b border-white/5">
+                        <p className="text-[10px] font-bold uppercase text-gray-400 px-2 py-1">Add to playlist</p>
+                      </div>
+                      <div className="max-h-48 overflow-y-auto custom-scrollbar">
+                        {userPlaylists.map(pl => (
+                          <button
+                            key={pl.id}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              addSongToPlaylist(pl.id, song);
+                              setActiveMenu(null);
+                            }}
+                            className="w-full text-left px-3 py-2 hover:bg-white/10 text-xs text-white truncate transition-colors"
+                          >
+                            {pl.name}
+                          </button>
+                        ))}
+                      </div>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleCreateNewFromSong(song);
+                        }}
+                        className="w-full text-left px-3 py-2 hover:bg-white/10 text-xs text-[#1db954] font-bold border-t border-white/5 flex items-center gap-2"
+                      >
+                        <FaPlusCircle size={10} />
+                        Create New
+                      </button>
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onAddToQueue(song);
+                          setActiveMenu(null);
+                        }}
+                        className="w-full text-left px-3 py-2 hover:bg-white/10 text-xs text-gray-300 border-t border-white/5"
+                      >
+                        Add to Queue
+                      </button>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
+
+      <CreatePlaylistModal
+        isOpen={isModalOpen}
+        onClose={() => setIsModalOpen(false)}
+        initialSong={modalSong}
+      />
     </div>
   );
 };
