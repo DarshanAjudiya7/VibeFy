@@ -23,12 +23,12 @@ const Artists = () => {
 
     return (
         <div className="flex flex-col gap-8 pb-10">
-            <div className="px-8 pt-10">
-                <h1 className="text-4xl font-black mb-2">Artists</h1>
-                <p className="text-[#b3b3b3] font-medium">Explore music by your favorite singers.</p>
+            <div className="px-4 sm:px-8 pt-16 sm:pt-10">
+                <h1 className="text-3xl sm:text-4xl font-black mb-2">Artists</h1>
+                <p className="text-[#b3b3b3] text-sm sm:text-base font-medium">Explore music by your favorite singers.</p>
             </div>
 
-            <div className="px-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            <div className="px-4 sm:px-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 sm:gap-6">
                 {filteredArtists.map((artist, idx) => (
                     <div
                         key={idx}

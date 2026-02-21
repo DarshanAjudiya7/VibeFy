@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-  FaArrowLeft, 
-  FaCog, 
-  FaPalette, 
-  FaPlay, 
-  FaBell, 
-  FaGlobe, 
-  FaVolumeUp, 
+import {
+  FaArrowLeft,
+  FaCog,
+  FaPalette,
+  FaPlay,
+  FaBell,
+  FaGlobe,
+  FaVolumeUp,
   FaDownload,
   FaMoon,
   FaSun,
@@ -20,11 +20,10 @@ import PersistentPlayer from "../components/PersistentPlayer";
 const ToggleSwitch = ({ checked, onChange, label, description, icon: Icon }) => (
   <div className="flex items-center justify-between p-6 bg-gradient-to-br from-white/5 to-white/10 backdrop-blur-xl rounded-2xl border border-white/10 hover:border-white/20 transition-all duration-300">
     <div className="flex items-center gap-4">
-      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-        checked 
-          ? 'bg-gradient-to-br from-green-400 to-cyan-400 shadow-lg shadow-green-400/30' 
+      <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${checked
+          ? 'bg-gradient-to-br from-green-400 to-cyan-400 shadow-lg shadow-green-400/30'
           : 'bg-gradient-to-br from-gray-500/20 to-gray-600/20'
-      }`}>
+        }`}>
         <Icon className={`text-xl ${checked ? 'text-white' : 'text-gray-400'}`} />
       </div>
       <div>
@@ -40,9 +39,8 @@ const ToggleSwitch = ({ checked, onChange, label, description, icon: Icon }) => 
         className="sr-only peer"
       />
       <div className="w-14 h-7 bg-gray-700 rounded-full peer peer-checked:bg-gradient-to-r from-green-400 to-cyan-400 transition-all duration-300 shadow-lg"></div>
-      <div className={`absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center ${
-        checked ? 'translate-x-7' : ''
-      }`}>
+      <div className={`absolute left-1 top-1 w-5 h-5 bg-white rounded-full shadow-lg transition-all duration-300 flex items-center justify-center ${checked ? 'translate-x-7' : ''
+        }`}>
         {checked && <FaCheck className="text-green-500 text-xs" />}
       </div>
     </label>
@@ -145,7 +143,7 @@ const SettingsPage = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#0f0f23] via-[#1a1a2e] to-[#16213e] text-white overflow-hidden pb-20">
-      
+
       {/* Animated Background */}
       <div className="pointer-events-none absolute inset-0 z-0">
         {/* Gradient orbs */}
@@ -164,7 +162,7 @@ const SettingsPage = () => {
             }}
           />
         ))}
-        
+
         {/* Grid pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
@@ -176,32 +174,32 @@ const SettingsPage = () => {
 
       <div className="relative z-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8 px-4 md:px-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 mt-12 md:mt-0 px-4 md:px-8">
           <button
-            onClick={() => navigate("/player")}
-            className="group flex items-center gap-3 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg transition-all duration-300 border border-blue-400/30 hover:border-blue-400/50 backdrop-blur-xl"
+            onClick={() => navigate("/")}
+            className="w-full md:w-auto group flex items-center justify-center gap-3 bg-gradient-to-r from-blue-500/20 to-cyan-500/20 hover:from-blue-500/30 hover:to-cyan-500/30 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg transition-all duration-300 border border-blue-400/30 hover:border-blue-400/50 backdrop-blur-xl scale-90 sm:scale-100"
           >
             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform duration-300" />
             Back to Player
           </button>
-          
+
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">
               Settings
             </h1>
-            <p className="text-gray-400 mt-2 flex items-center justify-center gap-2">
+            <p className="text-gray-400 mt-1 md:mt-2 text-sm flex items-center justify-center gap-2">
               <FaCog className="text-blue-400" />
               Customize your experience
             </p>
           </div>
-          
-          <div className="w-32" />
+
+          <div className="hidden md:block w-32" />
         </div>
 
         {/* Settings Container */}
         <div className="max-w-4xl mx-auto px-4 md:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            
+
             {/* Left Column */}
             <div className="space-y-6">
               {/* Theme Selection */}

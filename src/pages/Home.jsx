@@ -29,7 +29,7 @@ function Home() {
   return (
     <div className="flex flex-col gap-8 pb-10">
       {/* Hero Banner */}
-      <div className="px-8">
+      <div className="px-4 sm:px-8">
         <div className="relative h-[250px] md:h-[320px] rounded-xl overflow-hidden group cursor-pointer">
           <img
             src="/covers/banner.jpg"
@@ -37,16 +37,16 @@ function Home() {
             alt="Hero"
             onError={(e) => e.target.src = "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=1200&q=80"}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-8">
-            <p className="text-sm font-bold uppercase tracking-wider mb-2 text-[#1db954]">Featured Playlist</p>
-            <h1 className="text-5xl md:text-7xl font-black mb-4">VibeFy Mix</h1>
-            <p className="text-gray-300 max-w-xl">Fresh tunes, curated just for you. Discover your next favorite song with our smart recommendation engine.</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-8">
+            <p className="text-[10px] sm:text-sm font-bold uppercase tracking-wider mb-1 sm:mb-2 text-[#1db954]">Featured Playlist</p>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-black mb-2 sm:mb-4">VibeFy Mix</h1>
+            <p className="text-xs sm:text-base text-gray-300 max-w-xl line-clamp-2 sm:line-clamp-none">Fresh tunes, curated just for you. Discover your next favorite song with our smart recommendation engine.</p>
           </div>
         </div>
       </div>
 
       {/* Categories Grid */}
-      <div className="px-8 flex flex-col gap-10">
+      <div className="px-4 sm:px-8 flex flex-col gap-6 sm:gap-10">
         {categories.map((category, idx) => (
           category.songs.length > 0 && (
             <div key={idx}>

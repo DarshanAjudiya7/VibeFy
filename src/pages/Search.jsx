@@ -51,9 +51,9 @@ const Search = () => {
     };
 
     return (
-        <div className="flex flex-col min-h-full px-8 pt-6 pb-20">
+        <div className="flex flex-col min-h-full px-4 sm:px-8 pt-16 sm:pt-6 pb-20">
             {/* Premium Search Header */}
-            <div className="relative max-w-2xl mb-10 group">
+            <div className="relative max-w-2xl mb-6 sm:mb-10 group mt-4 sm:mt-0">
                 <div className="absolute inset-0 bg-[#1db954]/5 blur-2xl group-hover:bg-[#1db954]/10 transition-all rounded-full" />
                 <div className="relative flex items-center">
                     <FaSearch className="absolute left-5 text-gray-400 group-focus-within:text-white transition-colors" size={20} />

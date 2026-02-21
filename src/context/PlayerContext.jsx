@@ -14,6 +14,7 @@ export const PlayerProvider = ({ children }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [followedArtists, setFollowedArtists] = useState([]);
+  const [recentlyPlayed, setRecentlyPlayed] = useState([]);
 
   // Load user-specific data on login
   useEffect(() => {
@@ -25,9 +26,14 @@ export const PlayerProvider = ({ children }) => {
       const storedArtists = localStorage.getItem(`vibefy_followed_artists_${user.id}`);
       if (storedArtists) setFollowedArtists(JSON.parse(storedArtists));
       else setFollowedArtists([]);
+
+      const storedRecent = localStorage.getItem(`vibefy_recent_${user.id}`);
+      if (storedRecent) setRecentlyPlayed(JSON.parse(storedRecent));
+      else setRecentlyPlayed([]);
     } else {
       setUserPlaylists([]);
       setFollowedArtists([]);
+      setRecentlyPlayed([]);
     }
   }, [user]);
 
@@ -36,8 +42,9 @@ export const PlayerProvider = ({ children }) => {
     if (user) {
       localStorage.setItem(`vibefy_playlists_${user.id}`, JSON.stringify(userPlaylists));
       localStorage.setItem(`vibefy_followed_artists_${user.id}`, JSON.stringify(followedArtists));
+      localStorage.setItem(`vibefy_recent_${user.id}`, JSON.stringify(recentlyPlayed));
     }
-  }, [userPlaylists, followedArtists, user]);
+  }, [userPlaylists, followedArtists, recentlyPlayed, user]);
 
   // On mount, initialize playlist if not set
   useEffect(() => {
@@ -88,10 +95,19 @@ export const PlayerProvider = ({ children }) => {
     );
   };
 
+  const clearRecent = () => setRecentlyPlayed([]);
+
   // Player logic
   const playSong = (song, newPlaylist = null, songIndex = 0) => {
     setCurrentSong(song);
     setIsPlaying(true);
+
+    // Update recently played
+    setRecentlyPlayed(prev => {
+      const filtered = prev.filter(s => s.id !== song.id);
+      return [song, ...filtered].slice(0, 50); // Keep last 50
+    });
+
     if (newPlaylist) {
       setPlaylist(newPlaylist);
       setCurrentIndex(songIndex);
@@ -105,13 +121,11 @@ export const PlayerProvider = ({ children }) => {
     if (queue.length > 0) {
       const nextSong = queue[0];
       setQueue(queue.slice(1));
-      setCurrentSong(nextSong);
-      setIsPlaying(true);
+      playSong(nextSong);
     } else if (playlist.length > 0 && currentIndex < playlist.length - 1) {
       const nextIndex = currentIndex + 1;
       setCurrentIndex(nextIndex);
-      setCurrentSong(playlist[nextIndex]);
-      setIsPlaying(true);
+      playSong(playlist[nextIndex], playlist, nextIndex);
     }
   };
 
@@ -119,8 +133,7 @@ export const PlayerProvider = ({ children }) => {
     if (playlist.length > 0 && currentIndex > 0) {
       const prevIndex = currentIndex - 1;
       setCurrentIndex(prevIndex);
-      setCurrentSong(playlist[prevIndex]);
-      setIsPlaying(true);
+      playSong(playlist[prevIndex], playlist, prevIndex);
     }
   };
 
@@ -153,7 +166,9 @@ export const PlayerProvider = ({ children }) => {
         setCurrentIndex,
         userPlaylists,
         followedArtists,
+        recentlyPlayed,
         toggleFollowArtist,
+        clearRecent,
         createPlaylist,
         removePlaylist,
         addSongToPlaylist,

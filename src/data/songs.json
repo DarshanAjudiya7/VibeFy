@@ -178,5 +178,23 @@
     "cover": "/covers/soch na sake.jpg",
     "mood": "romantic",
     "duration": 185
+  },
+  {
+    "id": 21,
+    "title": "Dil Lagana Mana Tha",
+    "artist": "Krish Mandal",
+    "url": "/songs/Dil Lagana Mana Tha (Official Video)   Krish Mandal   Aman Jha   T-Series.mp3",
+    "cover": "/covers/dillagana.jpeg",
+    "mood": "romantic",
+    "duration": 205
+  },
+  {
+    "id": 22,
+    "title": "",
+    "artist": "",
+    "url": "",
+    "cover": "",
+    "mood": "",
+    "duration": 0
   }
 ]

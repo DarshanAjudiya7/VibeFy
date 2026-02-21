@@ -75,7 +75,7 @@ const Player = ({
   const isLiked = likedSongs.includes(currentSong.id);
 
   return (
-    <div className="flex items-center justify-between h-full bg-black px-4 text-white border-t border-white/5">
+    <div className="flex items-center justify-between h-full bg-black px-4 sm:px-4 text-white border-t border-white/5">
       <audio
         ref={audioRef}
         src={currentSong.url}
@@ -92,19 +92,19 @@ const Player = ({
       />
 
       {/* 1. Left Section: Song Info */}
-      <div className="flex items-center gap-4 w-[30%] min-w-0">
+      <div className="flex items-center gap-3 sm:gap-4 flex-1 lg:flex-none lg:w-[30%] min-w-0">
         <div className="relative group flex-shrink-0">
           <img
             src={currentSong.cover}
             alt={currentSong.title}
-            className="w-14 h-14 rounded object-cover shadow-lg"
+            className="w-12 h-12 sm:w-14 sm:h-14 rounded object-cover shadow-lg"
           />
         </div>
         <div className="flex flex-col overflow-hidden">
-          <h4 className="text-sm font-semibold truncate hover:underline cursor-pointer">
+          <h4 className="text-[13px] sm:text-sm font-semibold truncate hover:underline cursor-pointer">
             {currentSong.title}
           </h4>
-          <p className="text-xs text-[#b3b3b3] truncate hover:underline cursor-pointer">
+          <p className="text-[11px] sm:text-xs text-[#b3b3b3] truncate hover:underline cursor-pointer">
             {currentSong.artist}
           </p>
         </div>
@@ -117,11 +117,11 @@ const Player = ({
       </div>
 
       {/* 2. Center Section: Playback Controls & Progress Bar */}
-      <div className="flex flex-col items-center max-w-[45%] w-full gap-2">
-        <div className="flex items-center gap-6">
+      <div className="flex flex-col items-center flex-1 lg:flex-none lg:max-w-[45%] w-full gap-1 sm:gap-2">
+        <div className="flex items-center gap-4 sm:gap-6">
           <button
             onClick={() => setIsShuffled(!isShuffled)}
-            className={`transition-colors ${isShuffled ? 'text-[#1db954]' : 'text-[#b3b3b3] hover:text-white'}`}
+            className={`hidden sm:block transition-colors ${isShuffled ? 'text-[#1db954]' : 'text-[#b3b3b3] hover:text-white'}`}
           >
             <FaRandom size={16} />
           </button>
@@ -133,7 +133,7 @@ const Player = ({
           </button>
           <button
             onClick={togglePlayPause}
-            className="bg-white text-black p-2 rounded-full hover:scale-105 transition-transform"
+            className="bg-white text-black p-2 rounded-full hover:scale-105 transition-transform shadow-lg"
           >
             {isPlaying ? <FaPause size={18} /> : <FaPlay size={18} className="translate-x-0.5" />}
           </button>
@@ -145,15 +145,15 @@ const Player = ({
           </button>
           <button
             onClick={() => setIsRepeating(!isRepeating)}
-            className={`transition-colors ${isRepeating ? 'text-[#1db954]' : 'text-[#b3b3b3] hover:text-white'}`}
+            className={`hidden sm:block transition-colors ${isRepeating ? 'text-[#1db954]' : 'text-[#b3b3b3] hover:text-white'}`}
           >
             <FaSyncAlt size={16} />
           </button>
         </div>
 
-        {/* Progress Bar */}
-        <div className="flex items-center gap-2 w-full text-xs text-[#b3b3b3] font-medium">
-          <span className="w-10 text-right">{formatTime(progress)}</span>
+        {/* Progress Bar - Hidden on very small screens or made smaller */}
+        <div className="hidden sm:flex items-center gap-2 w-full text-[10px] sm:text-xs text-[#b3b3b3] font-medium">
+          <span className="w-8 sm:w-10 text-right">{formatTime(progress)}</span>
           <div className="group relative flex-1 flex items-center h-4 cursor-pointer">
             <input
               type="range"
@@ -164,12 +164,12 @@ const Player = ({
               className="absolute w-full h-1 bg-[#4d4d4d] rounded-full appearance-none cursor-pointer outline-none overflow-hidden accent-white group-hover:accent-[#1db954]"
             />
           </div>
-          <span className="w-10">{formatTime(duration)}</span>
+          <span className="w-8 sm:w-10">{formatTime(duration)}</span>
         </div>
       </div>
 
-      {/* 3. Right Section: Extra Controls */}
-      <div className="flex items-center justify-end gap-3 w-[30%]">
+      {/* 3. Right Section: Extra Controls - Hidden on mobile */}
+      <div className="hidden lg:flex items-center justify-end gap-3 w-[30%]">
         <button className="text-[#b3b3b3] hover:text-white transition-colors">
           <FaListUl size={16} />
         </button>

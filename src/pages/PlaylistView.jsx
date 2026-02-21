@@ -68,22 +68,22 @@ const PlaylistView = () => {
     return (
         <div className="flex flex-col min-h-full">
             {/* Header */}
-            <div className="px-8 pt-6 pb-8 bg-gradient-to-b from-gray-800 to-[#121212] flex items-end gap-6 min-h-[300px] relative">
+            <div className="px-4 sm:px-8 pt-16 sm:pt-6 pb-8 bg-gradient-to-b from-gray-800 to-[#121212] flex flex-col sm:flex-row items-center sm:items-end gap-6 min-h-[300px] relative text-center sm:text-left">
                 <button
                     onClick={() => navigate(-1)}
-                    className="absolute top-6 left-8 p-2 bg-black/40 rounded-full hover:bg-black/60 transition-all text-white"
+                    className="absolute top-6 left-4 sm:left-8 p-2 bg-black/40 rounded-full hover:bg-black/60 transition-all text-white"
                 >
                     <FaChevronLeft size={16} />
                 </button>
 
-                <div className="w-48 h-48 md:w-60 md:h-60 bg-gradient-to-br from-gray-700 to-gray-900 shadow-2xl flex items-center justify-center flex-shrink-0 rounded-lg">
-                    <FaMusic className="text-white/20 text-7xl md:text-9xl" />
+                <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-60 md:h-60 bg-gradient-to-br from-gray-700 to-gray-900 shadow-2xl flex items-center justify-center flex-shrink-0 rounded-lg">
+                    <FaMusic className="text-white/20 text-6xl sm:text-7xl md:text-9xl" />
                 </div>
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 w-full">
                     <span className="text-xs font-bold uppercase tracking-wider">Playlist</span>
-                    <h1 className="text-5xl md:text-8xl font-black truncate max-w-[60vw]">{playlist.name}</h1>
-                    <div className="flex items-center gap-2 mt-4 text-sm font-bold">
+                    <h1 className="text-3xl sm:text-5xl md:text-8xl font-black truncate max-w-full sm:max-w-[60vw]">{playlist.name}</h1>
+                    <div className="flex items-center justify-center sm:justify-start gap-2 mt-2 sm:mt-4 text-sm font-bold">
                         <span className="text-[#1db954]">VibeFy User</span>
                         <span className="w-1 h-1 bg-white rounded-full"></span>
                         <span>{playlist.songs.length} songs</span>
@@ -92,12 +92,12 @@ const PlaylistView = () => {
             </div>
 
             {/* Controls */}
-            <div className="px-8 py-6 flex items-center justify-between">
-                <div className="flex items-center gap-8">
+            <div className="px-4 sm:px-8 py-6 flex items-center justify-between">
+                <div className="flex items-center gap-6 sm:gap-8">
                     <button
                         onClick={handlePlayPlaylist}
                         disabled={playlist.songs.length === 0}
-                        className={`w-14 h-14 rounded-full flex items-center justify-center text-black transition-all shadow-xl ${playlist.songs.length > 0 ? "bg-[#1db954] hover:scale-105 active:scale-95" : "bg-gray-600 opacity-50 cursor-not-allowed"
+                        className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center text-black transition-all shadow-xl ${playlist.songs.length > 0 ? "bg-[#1db954] hover:scale-105 active:scale-95" : "bg-gray-600 opacity-50 cursor-not-allowed"
                             }`}
                     >
                         {isPlaylistPlaying ? <FaPause size={20} /> : <FaPlay size={20} className="translate-x-0.5" />}
@@ -113,7 +113,7 @@ const PlaylistView = () => {
             </div>
 
             {/* List */}
-            <div className="px-8">
+            <div className="px-4 sm:px-8">
                 {playlist.songs.length === 0 ? (
                     <div className="flex flex-col items-center justify-center py-20 text-[#b3b3b3] bg-white/5 rounded-2xl border border-dashed border-white/10 mb-10">
                         <FaMusic size={64} className="mb-4 opacity-10" />

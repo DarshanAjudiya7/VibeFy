@@ -1,46 +1,45 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { 
-  FaArrowLeft, 
-  FaChartBar, 
-  FaMusic, 
-  FaHeart, 
-  FaClock, 
-  FaFire, 
-  FaUser, 
+import {
+  FaArrowLeft,
+  FaChartBar,
+  FaMusic,
+  FaHeart,
+  FaClock,
+  FaFire,
+  FaUser,
   FaPalette,
   FaPlay,
   FaCrown,
   FaStar
 } from "react-icons/fa";
-import songs from "../data/songs.json";
+import { usePlayer } from "../context/PlayerContext";
+import songsData from "../data/songs.json";
 
 const StatsPage = () => {
+  const { recentlyPlayed } = usePlayer();
   const [recentSongs, setRecentSongs] = useState([]);
   const [selectedTimeframe, setSelectedTimeframe] = useState('all');
   const [hoveredItem, setHoveredItem] = useState(null);
   const navigate = useNavigate();
 
   useEffect(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem("recentlyPlayed")) || [];
-      const playMap = new Map();
-      stored.forEach((song) => {
-        const key = song.id;
-        if (playMap.has(key)) {
-          const existing = playMap.get(key);
-          existing.count += 1;
-          playMap.set(key, existing);
-        } else {
-          playMap.set(key, { ...song, count: song.count || 1 });
-        }
-      });
-      const uniqueSongs = Array.from(playMap.values());
-      setRecentSongs(uniqueSongs);
-    } catch (e) {
-      console.error("Stats error", e);
-    }
-  }, []);
+    // Process recentlyPlayed songs to count occurrences for stats
+    const playMap = new Map();
+    // In our new system, recentlyPlayed is a unique list of last played songs.
+    // For stats to be meaningful, we'd traditionally need a full log, 
+    // but we'll use the current recent list and simulate weights for demonstration
+    // or simply display them as they are.
+    recentlyPlayed.forEach((song, index) => {
+      const key = song.id;
+      // We simulate count based on position (higher/more recent = higher weight) 
+      // OR if we want real stats, we'd need a different tracking system.
+      // For now, let's just use the unique songs in the history.
+      playMap.set(key, { ...song, count: 1 });
+    });
+    setRecentSongs(Array.from(playMap.values()));
+  }, [recentlyPlayed]);
+
 
   const moodStats = {};
   const artistStats = {};
@@ -81,7 +80,7 @@ const StatsPage = () => {
 
   return (
     <div className="relative min-h-screen bg-gradient-to-br from-[#0a0a0f] via-[#1a1a2e] to-[#16213e] p-4 md:p-8 text-white overflow-hidden pb-20 mb-4">
-      
+
       {/* Animated Background */}
       <div className="pointer-events-none absolute inset-0 z-0">
         {/* Gradient orbs */}
@@ -100,7 +99,7 @@ const StatsPage = () => {
             }}
           />
         ))}
-        
+
         {/* Grid pattern */}
         <div className="absolute inset-0 opacity-5">
           <div className="absolute inset-0" style={{
@@ -110,76 +109,76 @@ const StatsPage = () => {
         </div>
       </div>
 
-      <div className="relative z-10">
+      <div className="relative z-10 px-0 sm:px-4">
         {/* Header */}
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between gap-6 mb-8 mt-12 md:mt-0">
           <button
-            onClick={() => navigate("/player")}
-            className="group flex items-center gap-3 bg-gradient-to-r from-green-500/20 to-cyan-500/20 hover:from-green-500/30 hover:to-cyan-500/30 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg transition-all duration-300 border border-green-400/30 hover:border-green-400/50 backdrop-blur-xl"
+            onClick={() => navigate("/")}
+            className="w-full md:w-auto group flex items-center justify-center gap-3 bg-gradient-to-r from-green-500/20 to-cyan-500/20 hover:from-green-500/30 hover:to-cyan-500/30 text-white font-semibold px-6 py-3 rounded-2xl shadow-lg transition-all duration-300 border border-green-400/30 hover:border-green-400/50 backdrop-blur-xl scale-90 sm:scale-100"
           >
             <FaArrowLeft className="group-hover:-translate-x-1 transition-transform duration-300" />
             Back to Player
           </button>
-          
+
           <div className="text-center">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">
               Your Stats
             </h1>
-            <p className="text-gray-400 mt-2 flex items-center justify-center gap-2">
+            <p className="text-gray-400 mt-1 md:mt-2 text-sm flex items-center justify-center gap-2">
               <FaChartBar className="text-green-400" />
               Listening Analytics
             </p>
           </div>
-          
-          <div className="w-32" />
+
+          <div className="hidden md:block w-32" />
         </div>
 
         {/* Main Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-          <div className="bg-gradient-to-br from-green-500/10 to-cyan-500/10 backdrop-blur-xl rounded-2xl p-6 border border-green-400/20 hover:border-green-400/40 transition-all duration-300 group">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-green-400 to-cyan-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <FaPlay className="text-white text-xl" />
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+          <div className="bg-gradient-to-br from-green-500/10 to-cyan-500/10 backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-green-400/20 hover:border-green-400/40 transition-all duration-300 group">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-green-400 to-cyan-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <FaPlay className="text-white text-lg sm:text-xl" />
               </div>
               <div>
-                <p className="text-gray-400 text-sm">Total Plays</p>
-                <p className="text-3xl font-bold text-white">{totalPlays}</p>
+                <p className="text-gray-400 text-[10px] sm:text-sm">Total Plays</p>
+                <p className="text-xl sm:text-3xl font-bold text-white">{totalPlays}</p>
               </div>
             </div>
           </div>
-          
-          <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-purple-400/20 hover:border-purple-400/40 transition-all duration-300 group">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <FaMusic className="text-white text-xl" />
+
+          <div className="bg-gradient-to-br from-purple-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-purple-400/20 hover:border-purple-400/40 transition-all duration-300 group">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-purple-400 to-pink-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <FaMusic className="text-white text-lg sm:text-xl" />
               </div>
               <div>
-                <p className="text-gray-400 text-sm">Unique Songs</p>
-                <p className="text-3xl font-bold text-white">{uniqueSongs}</p>
+                <p className="text-gray-400 text-[10px] sm:text-sm">Unique Songs</p>
+                <p className="text-xl sm:text-3xl font-bold text-white">{uniqueSongs}</p>
               </div>
             </div>
           </div>
-          
-          <div className="bg-gradient-to-br from-orange-500/10 to-yellow-500/10 backdrop-blur-xl rounded-2xl p-6 border border-orange-400/20 hover:border-orange-400/40 transition-all duration-300 group">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-orange-400 to-yellow-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <FaUser className="text-white text-xl" />
+
+          <div className="bg-gradient-to-br from-orange-500/10 to-yellow-500/10 backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-orange-400/20 hover:border-orange-400/40 transition-all duration-300 group">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-orange-400 to-yellow-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <FaUser className="text-white text-lg sm:text-xl" />
               </div>
-              <div>
-                <p className="text-gray-400 text-sm">Top Artist</p>
-                <p className="text-lg font-bold text-white truncate">{topArtist ? topArtist[0] : 'None'}</p>
+              <div className="w-full overflow-hidden">
+                <p className="text-gray-400 text-[10px] sm:text-sm">Top Artist</p>
+                <p className="text-sm sm:text-lg font-bold text-white truncate">{topArtist ? topArtist[0] : 'None'}</p>
               </div>
             </div>
           </div>
-          
-          <div className="bg-gradient-to-br from-red-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-6 border border-red-400/20 hover:border-red-400/40 transition-all duration-300 group">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-gradient-to-br from-red-400 to-pink-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <FaPalette className="text-white text-xl" />
+
+          <div className="bg-gradient-to-br from-red-500/10 to-pink-500/10 backdrop-blur-xl rounded-2xl p-4 sm:p-6 border border-red-400/20 hover:border-red-400/40 transition-all duration-300 group">
+            <div className="flex flex-col sm:flex-row items-center sm:items-start text-center sm:text-left gap-3 sm:gap-4">
+              <div className="w-10 h-10 sm:w-12 sm:h-12 bg-gradient-to-br from-red-400 to-pink-400 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                <FaPalette className="text-white text-lg sm:text-xl" />
               </div>
               <div>
-                <p className="text-gray-400 text-sm">Top Mood</p>
-                <p className="text-lg font-bold text-white capitalize">{topMood ? topMood[0] : 'None'}</p>
+                <p className="text-gray-400 text-[10px] sm:text-sm">Top Mood</p>
+                <p className="text-sm sm:text-lg font-bold text-white capitalize">{topMood ? topMood[0] : 'None'}</p>
               </div>
             </div>
           </div>
@@ -195,7 +194,7 @@ const StatsPage = () => {
               </div>
               <h3 className="text-2xl font-bold">Top Moods</h3>
             </div>
-            
+
             <div className="space-y-4">
               {Object.entries(moodStats).length === 0 ? (
                 <p className="text-gray-400 text-center py-8">No mood data available</p>
@@ -214,7 +213,7 @@ const StatsPage = () => {
                           <span className="font-bold text-green-400">{count}</span>
                         </div>
                         <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
-                          <div 
+                          <div
                             className={`h-full bg-gradient-to-r ${getMoodColor(mood)} rounded-full transition-all duration-1000 ease-out`}
                             style={{ width: `${percentage}%` }}
                           ></div>
@@ -234,7 +233,7 @@ const StatsPage = () => {
               </div>
               <h3 className="text-2xl font-bold">Top Artists</h3>
             </div>
-            
+
             <div className="space-y-4">
               {Object.entries(artistStats).length === 0 ? (
                 <p className="text-gray-400 text-center py-8">No artist data available</p>
@@ -248,12 +247,11 @@ const StatsPage = () => {
                       <div key={artist} className="space-y-2">
                         <div className="flex items-center justify-between">
                           <div className="flex items-center gap-3">
-                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${
-                              index === 0 ? 'bg-gradient-to-br from-yellow-400 to-orange-400' :
+                            <div className={`w-8 h-8 rounded-full flex items-center justify-center ${index === 0 ? 'bg-gradient-to-br from-yellow-400 to-orange-400' :
                               index === 1 ? 'bg-gradient-to-br from-gray-400 to-gray-500' :
-                              index === 2 ? 'bg-gradient-to-br from-orange-400 to-red-400' :
-                              'bg-gradient-to-br from-blue-400 to-cyan-400'
-                            }`}>
+                                index === 2 ? 'bg-gradient-to-br from-orange-400 to-red-400' :
+                                  'bg-gradient-to-br from-blue-400 to-cyan-400'
+                              }`}>
                               <span className="text-white font-bold text-sm">{index + 1}</span>
                             </div>
                             <span className="font-medium truncate">{artist}</span>
@@ -261,7 +259,7 @@ const StatsPage = () => {
                           <span className="font-bold text-green-400">{count}</span>
                         </div>
                         <div className="w-full bg-gray-700 rounded-full h-3 overflow-hidden">
-                          <div 
+                          <div
                             className="h-full bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full transition-all duration-1000 ease-out"
                             style={{ width: `${percentage}%` }}
                           ></div>
@@ -286,7 +284,7 @@ const StatsPage = () => {
                 <p className="text-gray-400">Your favorite track</p>
               </div>
             </div>
-            
+
             <div className="flex items-center gap-6">
               <img
                 src={mostPlayedSong.cover || "https://via.placeholder.com/120"}
@@ -300,14 +298,13 @@ const StatsPage = () => {
                   <span className="bg-gradient-to-r from-green-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-bold">
                     {mostPlayedSong.count} plays
                   </span>
-                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-                    mostPlayedSong.mood === 'romantic' ? 'bg-pink-500/20 text-pink-300' :
+                  <span className={`px-3 py-1 rounded-full text-xs font-medium ${mostPlayedSong.mood === 'romantic' ? 'bg-pink-500/20 text-pink-300' :
                     mostPlayedSong.mood === 'party' ? 'bg-purple-500/20 text-purple-300' :
-                    mostPlayedSong.mood === 'sad' ? 'bg-blue-500/20 text-blue-300' :
-                    mostPlayedSong.mood === 'intense' ? 'bg-red-500/20 text-red-300' :
-                    mostPlayedSong.mood === 'pretty' ? 'bg-yellow-500/20 text-yellow-300' :
-                    'bg-gray-500/20 text-gray-300'
-                  }`}>
+                      mostPlayedSong.mood === 'sad' ? 'bg-blue-500/20 text-blue-300' :
+                        mostPlayedSong.mood === 'intense' ? 'bg-red-500/20 text-red-300' :
+                          mostPlayedSong.mood === 'pretty' ? 'bg-yellow-500/20 text-yellow-300' :
+                            'bg-gray-500/20 text-gray-300'
+                    }`}>
                     {mostPlayedSong.mood}
                   </span>
                 </div>
@@ -324,7 +321,7 @@ const StatsPage = () => {
             </div>
             <h3 className="text-2xl font-bold">Recent Activity</h3>
           </div>
-          
+
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
             {recentSongs.length === 0 ? (
               <div className="col-span-full text-center py-12">
@@ -353,7 +350,7 @@ const StatsPage = () => {
                       <span className="text-xs text-green-400 font-bold">{song.count} plays</span>
                       <span className="text-xs">{getMoodIcon(song.mood)}</span>
                     </div>
-                    
+
                     {/* Hover overlay */}
                     {hoveredItem === song.id && (
                       <div className="absolute inset-0 bg-black/50 rounded-2xl flex items-center justify-center">

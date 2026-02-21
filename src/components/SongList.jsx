@@ -35,7 +35,7 @@ const SongList = ({
   return (
     <div className="w-full text-[#b3b3b3] text-sm pb-10">
       {/* Table Header */}
-      <div className="grid grid-cols-[16px_4fr_1fr_48px] gap-4 px-4 py-2 border-b border-white/10 mb-4 font-medium uppercase tracking-wider text-[11px]">
+      <div className="grid grid-cols-[16px_4fr_1fr_48px] sm:grid-cols-[16px_4fr_1fr_48px] gap-2 sm:gap-4 px-2 sm:px-4 py-2 border-b border-white/10 mb-4 font-medium uppercase tracking-wider text-[11px]">
         <div className="flex justify-center">#</div>
         <div>Title</div>
         <div className="hidden md:block">Artist</div>
@@ -53,11 +53,11 @@ const SongList = ({
             <div
               key={song.id}
               onClick={() => isCurrentActive ? togglePlayPause() : onSelectSong(song)}
-              className="grid grid-cols-[16px_4fr_1fr_48px] gap-4 px-4 py-2 items-center hover:bg-white/10 rounded-md transition-colors group cursor-pointer relative"
+              className="grid grid-cols-[16px_4fr_1fr_48px] sm:grid-cols-[16px_4fr_1fr_48px] gap-2 sm:gap-4 px-2 sm:px-4 py-2 items-center hover:bg-white/10 rounded-md transition-colors group cursor-pointer relative"
             >
               {/* Index / Play Button */}
               <div className="flex justify-center items-center relative h-10 w-4">
-                <span className={`group-hover:hidden transition-opacity ${isCurrentActive ? "text-[#1db954] font-bold" : ""}`}>
+                <span className={`group-hover:hidden transition-opacity text-[10px] sm:text-sm ${isCurrentActive ? "text-[#1db954] font-bold" : ""}`}>
                   {index + 1}
                 </span>
                 <div className="hidden group-hover:block text-white text-[10px]">
