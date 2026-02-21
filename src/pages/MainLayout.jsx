@@ -6,38 +6,29 @@ import Player from '../pages/Player';
 import SearchBar from '../components/SearchBar';
 import { usePlayer } from '../context/PlayerContext';
 import songs from '../data/songs.json';
-import { FaChevronLeft, FaChevronRight, FaHome, FaSearch, FaHeart, FaMicrophone } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaHome, FaSearch, FaHeart, FaMicrophone, FaList } from 'react-icons/fa';
 
 const MainLayout = () => {
   const [search, setSearch] = useState("");
-  const [likedSongs, setLikedSongs] = useState([]);
   const [isRepeating, setIsRepeating] = useState(false);
   const navigate = useNavigate();
   const { pathname } = useLocation();
 
   const {
     playlist,
-    setPlaylist
+    setPlaylist,
+    likedSongs,
+    toggleLike
   } = usePlayer();
 
   useEffect(() => {
-    const stored = JSON.parse(localStorage.getItem("likedSongs")) || [];
-    setLikedSongs(stored);
     if (!playlist.length) setPlaylist(songs);
   }, []);
-
-  const toggleLike = (songId) => {
-    const updated = likedSongs.includes(songId)
-      ? likedSongs.filter((id) => id !== songId)
-      : [...likedSongs, songId];
-    setLikedSongs(updated);
-    localStorage.setItem("likedSongs", JSON.stringify(updated));
-  };
 
   const navItems = [
     { path: "/", icon: FaHome, label: "Home" },
     { path: "/search", icon: FaSearch, label: "Search" },
-    { path: "/liked", icon: FaHeart, label: "Liked" },
+    { path: "/library", icon: FaList, label: "Library" },
     { path: "/artists", icon: FaMicrophone, label: "Artists" },
   ];
 
@@ -72,7 +63,10 @@ const MainLayout = () => {
             </div>
           </div>
           <div className="flex items-center gap-2 sm:gap-4 ml-2">
-            <button className="hidden md:block bg-white text-black font-bold px-4 py-2 rounded-full text-sm hover:scale-105 active:scale-95 transition-all">
+            <button
+              onClick={() => navigate("/premium")}
+              className="hidden md:block bg-white text-black font-bold px-4 py-2 rounded-full text-sm hover:scale-105 active:scale-95 transition-all"
+            >
               Explore Premium
             </button>
             <UserButton afterSignOutUrl="/" />

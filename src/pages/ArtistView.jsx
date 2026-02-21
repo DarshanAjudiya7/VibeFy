@@ -4,6 +4,7 @@ import { FaPlay, FaPause, FaChevronLeft, FaMicrophone } from "react-icons/fa";
 import { usePlayer } from "../context/PlayerContext";
 import SongList from "../components/SongList";
 import songsData from "../data/songs.json";
+import artistsData from "../data/artists.json";
 
 const ArtistView = () => {
     const { name } = useParams();
@@ -12,10 +13,16 @@ const ArtistView = () => {
     const { playSong, addToQueue, isPlaying, togglePlayPause, currentSong, followedArtists, toggleFollowArtist } = usePlayer();
     const { search, likedSongs, toggleLike } = useOutletContext();
 
-    const artistSongs = songsData.filter(s => s.artist === decodedName);
+    const artistSongs = songsData.filter(s =>
+        s.artist.toLowerCase().includes(decodedName.toLowerCase())
+    );
+    const artistMeta = artistsData.find(a => a.name.toLowerCase() === decodedName.toLowerCase());
+
     const filteredSongs = artistSongs.filter(song =>
         song.title.toLowerCase().includes(search.toLowerCase())
     );
+
+    const artistImage = artistMeta?.image || artistSongs[0]?.cover || "/covers/default.jpg";
 
     const isArtistPlaying = isPlaying && currentSong && artistSongs.some(s => s.id === currentSong.id);
     const isFollowed = followedArtists.includes(decodedName);
@@ -40,13 +47,12 @@ const ArtistView = () => {
                 </button>
 
                 <div className="w-40 h-40 sm:w-48 sm:h-48 md:w-64 md:h-64 shadow-2xl flex-shrink-0 rounded-full overflow-hidden border-4 border-white/10 group">
-                    {artistSongs[0]?.cover ? (
-                        <img src={artistSongs[0].cover} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" alt={decodedName} />
-                    ) : (
-                        <div className="w-full h-full bg-zinc-800 flex items-center justify-center">
-                            <FaMicrophone size={60} className="text-zinc-600" />
-                        </div>
-                    )}
+                    <img
+                        src={artistImage}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        alt={decodedName}
+                        onError={(e) => (e.target.src = "/covers/default.jpg")}
+                    />
                 </div>
 
                 <div className="flex flex-col gap-2 sm:gap-3 py-2 w-full">

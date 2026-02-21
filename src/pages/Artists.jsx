@@ -2,18 +2,28 @@ import React from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import songsData from "../data/songs.json";
+import artistsData from "../data/artists.json";
 
 const Artists = () => {
     const navigate = useNavigate();
     const { search } = useOutletContext();
 
-    // Get unique artists
-    const artists = [...new Set(songsData.map(song => song.artist))].map(name => {
-        const artistSongs = songsData.filter(s => s.artist === name);
+    // Get individual artists from collaborative strings
+    const allArtists = songsData.reduce((acc, song) => {
+        const parts = song.artist.split(/&|,| and /).map(s => s.trim()).filter(Boolean);
+        return [...acc, ...parts];
+    }, []);
+
+    const uniqueArtistNames = [...new Set(allArtists)];
+
+    const artists = uniqueArtistNames.map(name => {
+        const artistSongs = songsData.filter(s => s.artist.includes(name));
+        const artistMeta = artistsData.find(a => a.name.toLowerCase() === name.toLowerCase());
+
         return {
             name,
             songCount: artistSongs.length,
-            cover: artistSongs[0]?.cover || "/covers/default.jpg"
+            cover: artistMeta?.image || artistSongs[0]?.cover || "/covers/default.jpg"
         };
     });
 

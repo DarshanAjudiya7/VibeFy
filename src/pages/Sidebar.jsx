@@ -16,12 +16,21 @@ import { usePlayer } from "../context/PlayerContext";
 import CreatePlaylistModal from "../components/CreatePlaylistModal";
 import ConfirmModal from "../components/ConfirmModal";
 import songsData from "../data/songs.json";
+import artistsData from "../data/artists.json";
 
 const Sidebar = () => {
   const { pathname } = useLocation();
   const { userPlaylists, removePlaylist, followedArtists } = usePlayer();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(null);
+
+  const getArtistImage = (artistName) => {
+    const artistMeta = artistsData.find(a => a.name === artistName);
+    if (artistMeta?.image) return artistMeta.image;
+
+    const artistSong = songsData.find(s => s.artist === artistName);
+    return artistSong?.cover || null;
+  };
 
   const primaryNav = [
     { path: "/", icon: FaHome, label: "Home" },
@@ -31,7 +40,6 @@ const Sidebar = () => {
 
 
   const libraryNav = [
-    { path: "/liked", icon: FaHeart, label: "Liked Songs", color: "text-purple-400" },
     { path: "/recent", icon: FaList, label: "Recently Played", color: "text-blue-400" },
     { path: "/stats", icon: FaGlobe, label: "Your Stats", color: "text-green-400" },
   ];
@@ -57,10 +65,10 @@ const Sidebar = () => {
         {/* Library Section */}
         <div className="flex-1 bg-[#121212] rounded-lg p-2 flex flex-col min-h-0">
           <div className="flex items-center justify-between px-4 py-2 text-[#b3b3b3]">
-            <div className="flex items-center gap-3 hover:text-white transition-colors cursor-pointer group" onClick={() => setIsModalOpen(true)}>
+            <Link to="/library" className="flex items-center gap-3 hover:text-white transition-colors cursor-pointer group">
               <FaList size={22} className="group-hover:rotate-[-5deg] transition-transform" />
               <span className="font-bold">Your Library</span>
-            </div>
+            </Link>
             <div className="flex items-center gap-4">
               <FaPlus
                 className="hover:text-white transition-colors cursor-pointer"
@@ -99,7 +107,7 @@ const Sidebar = () => {
               <div className="space-y-1">
                 <p className="px-4 py-2 text-[11px] font-bold uppercase tracking-widest text-gray-500">Following</p>
                 {followedArtists.map((artistName) => {
-                  const artistSong = songsData.find(s => s.artist === artistName);
+                  const image = getArtistImage(artistName);
                   return (
                     <Link
                       key={artistName}
@@ -107,8 +115,8 @@ const Sidebar = () => {
                       className={`flex items-center gap-3 p-2 rounded-md hover:bg-[#1a1a1a] transition-all group ${pathname === `/artist/${encodeURIComponent(artistName)}` ? "bg-[#232323]" : ""}`}
                     >
                       <div className="w-12 h-12 rounded-full overflow-hidden bg-zinc-800 flex-shrink-0 group-hover:scale-105 transition-transform border border-white/5">
-                        {artistSong?.cover ? (
-                          <img src={artistSong.cover} className="w-full h-full object-cover" alt={artistName} />
+                        {image ? (
+                          <img src={image} className="w-full h-full object-cover" alt={artistName} />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center text-gray-400">
                             <FaUserCircle size={24} />

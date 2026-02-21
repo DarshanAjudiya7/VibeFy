@@ -15,36 +15,48 @@ export const PlayerProvider = ({ children }) => {
   const [userPlaylists, setUserPlaylists] = useState([]);
   const [followedArtists, setFollowedArtists] = useState([]);
   const [recentlyPlayed, setRecentlyPlayed] = useState([]);
+  const [likedSongs, setLikedSongs] = useState([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   // Load user-specific data on login
   useEffect(() => {
     if (user) {
       const storedPlaylists = localStorage.getItem(`vibefy_playlists_${user.id}`);
-      if (storedPlaylists) setUserPlaylists(JSON.parse(storedPlaylists));
-      else setUserPlaylists([]);
-
       const storedArtists = localStorage.getItem(`vibefy_followed_artists_${user.id}`);
-      if (storedArtists) setFollowedArtists(JSON.parse(storedArtists));
-      else setFollowedArtists([]);
-
       const storedRecent = localStorage.getItem(`vibefy_recent_${user.id}`);
-      if (storedRecent) setRecentlyPlayed(JSON.parse(storedRecent));
-      else setRecentlyPlayed([]);
+      const storedLiked = localStorage.getItem(`vibefy_liked_${user.id}`);
+
+      setUserPlaylists(storedPlaylists ? JSON.parse(storedPlaylists) : []);
+      setFollowedArtists(storedArtists ? JSON.parse(storedArtists) : []);
+      setRecentlyPlayed(storedRecent ? JSON.parse(storedRecent) : []);
+      setLikedSongs(storedLiked ? JSON.parse(storedLiked) : []);
+      setIsLoaded(true);
     } else {
       setUserPlaylists([]);
       setFollowedArtists([]);
       setRecentlyPlayed([]);
+      setLikedSongs([]);
+      setIsLoaded(false);
     }
   }, [user]);
 
-  // Sync data to localStorage
+  // Sync data to localStorage ONLY after initial load is complete
   useEffect(() => {
-    if (user) {
+    if (user && isLoaded) {
       localStorage.setItem(`vibefy_playlists_${user.id}`, JSON.stringify(userPlaylists));
       localStorage.setItem(`vibefy_followed_artists_${user.id}`, JSON.stringify(followedArtists));
       localStorage.setItem(`vibefy_recent_${user.id}`, JSON.stringify(recentlyPlayed));
+      localStorage.setItem(`vibefy_liked_${user.id}`, JSON.stringify(likedSongs));
     }
-  }, [userPlaylists, followedArtists, recentlyPlayed, user]);
+  }, [userPlaylists, followedArtists, recentlyPlayed, likedSongs, user, isLoaded]);
+
+  const toggleLike = (songId) => {
+    setLikedSongs(prev =>
+      prev.includes(songId)
+        ? prev.filter(id => id !== songId)
+        : [...prev, songId]
+    );
+  };
 
   // On mount, initialize playlist if not set
   useEffect(() => {
@@ -97,6 +109,11 @@ export const PlayerProvider = ({ children }) => {
 
   const clearRecent = () => setRecentlyPlayed([]);
 
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
+
+  // ... (rest of the states)
+
   // Player logic
   const playSong = (song, newPlaylist = null, songIndex = 0) => {
     setCurrentSong(song);
@@ -118,21 +135,39 @@ export const PlayerProvider = ({ children }) => {
   };
 
   const playNext = () => {
+    if (isRepeat && currentSong) {
+      // If repeat is on, just play the same song again by resetting it
+      // This logic will be triggered by handleSongEnd primarily
+      playSong(currentSong);
+      return;
+    }
+
     if (queue.length > 0) {
       const nextSong = queue[0];
       setQueue(queue.slice(1));
       playSong(nextSong);
-    } else if (playlist.length > 0 && currentIndex < playlist.length - 1) {
-      const nextIndex = currentIndex + 1;
-      setCurrentIndex(nextIndex);
+      return;
+    }
+
+    if (playlist.length > 0) {
+      let nextIndex;
+      if (isShuffle) {
+        nextIndex = Math.floor(Math.random() * playlist.length);
+      } else {
+        nextIndex = (currentIndex + 1) % playlist.length;
+      }
       playSong(playlist[nextIndex], playlist, nextIndex);
     }
   };
 
   const playPrevious = () => {
-    if (playlist.length > 0 && currentIndex > 0) {
-      const prevIndex = currentIndex - 1;
-      setCurrentIndex(prevIndex);
+    if (playlist.length > 0) {
+      let prevIndex;
+      if (isShuffle) {
+        prevIndex = Math.floor(Math.random() * playlist.length);
+      } else {
+        prevIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+      }
       playSong(playlist[prevIndex], playlist, prevIndex);
     }
   };
@@ -167,6 +202,8 @@ export const PlayerProvider = ({ children }) => {
         userPlaylists,
         followedArtists,
         recentlyPlayed,
+        likedSongs,
+        toggleLike,
         toggleFollowArtist,
         clearRecent,
         createPlaylist,

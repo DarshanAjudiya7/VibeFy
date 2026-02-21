@@ -12,6 +12,8 @@ import PlaylistView from "./pages/PlaylistView";
 import Artists from "./pages/Artists";
 import ArtistView from "./pages/ArtistView";
 import Search from "./pages/Search";
+import Premium from "./pages/Premium";
+import Library from "./pages/Library";
 
 function App() {
   return (
@@ -26,10 +28,12 @@ function App() {
                 <Route path="stats" element={<Stats />} />
                 <Route path="settings" element={<Settings />} />
                 <Route path="liked" element={<Liked />} />
+                <Route path="library" element={<Library />} />
                 <Route path="playlist/:id" element={<PlaylistView />} />
                 <Route path="artists" element={<Artists />} />
                 <Route path="artist/:name" element={<ArtistView />} />
                 <Route path="search" element={<Search />} />
+                <Route path="premium" element={<Premium />} />
               </Route>
             </Routes>
           </Router>

@@ -1,0 +1,47 @@
+[
+    {
+        "name": "Arijit Singh",
+        "image": "/singers/arijitsingh.jpeg",
+        "bio": "Arijit Singh is an Indian playback singer and music composer. He is best known for his soulful and romantic songs."
+    },
+    {
+        "name": "Atif Aslam",
+        "image": "/singers/atifaslam.jpeg",
+        "bio": "Atif Aslam is a Pakistani playback singer, songwriter, and actor. He has recorded numerous chart-topping songs in both Pakistan and India."
+    },
+    {
+        "name": "Pritam",
+        "image": "/singers/pritam.jpeg",
+        "bio": "Pritam Chakraborty, popularly known as Pritam, is an Indian music director, composer, and singer."
+    },
+    {
+        "name": "Neha Kakkar",
+        "image": "/singers/nehakakkar.jpeg",
+        "bio": "Neha Kakkar is an Indian playback singer who has won several awards for her high-energy dance tracks and romantic songs."
+    },
+    {
+        "name": "Tulsi Kumar",
+        "image": "/singers/tulsikumar.jpeg",
+        "bio": "Tulsi Kumar is an Indian playback singer and entrepreneur, known for her contributions to Bollywood music."
+    },
+    {
+        "name": "Sachin-Jigar",
+        "image": "/singers/sachin-jigar.jpeg",
+        "bio": "Sachin-Jigar is an Indian music composer duo from Mumbai, India, consisting of Sachin Sanghvi and Jigar Saraiya."
+    },
+    {
+        "name": "Sachet Tandon",
+        "image": "/singers/sachetparampara.jpeg",
+        "bio": "Sachet Tandon is an Indian singer and music composer known for his hits like 'Bekhayali' from Kabir Singh."
+    },
+    {
+        "name": "Anirudh",
+        "image": "/singers/anirudh.jpeg",
+        "bio": "Anirudh Ravichander is an Indian music composer and singer who works primarily in Tamil cinema."
+    },
+    {
+        "name": "Krish Mandal",
+        "image": "/singers/krishmandal.jpeg",
+        "bio": "Krish Mandal is a rising artist in the Indian music scene, known for his unique vocal texture."
+    }
+]
